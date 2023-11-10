@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_menu_view"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/round_home_24"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/round_mark_unread_chat_alt_24"
+            android:title="Chat" />
+
+    </group>
+    <item android:title="Support">
+        <menu>
+            <item
+                android:id="@+id/nav_Support"
+                android:icon="@drawable/round_support_agent_24"
+                android:title="Help &amp; Support" />
+            <item
+                android:id="@+id/nav_Rate"
+                android:icon="@drawable/round_star_24"
+                android:title="Rate this App" />
+        </menu>
+    </item>
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/nav_privacy"
+                android:icon="@drawable/round_privacy_tip_24"
+                android:title="Privacy Policy" />
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/round_settings_24"
+                android:title="Setting" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/round_logout_24"
+                android:title="Logout" />
+        </menu>
+    </item>
+    <item
+        android:enabled="false"
+        android:title="Version: 1.0.0"></item>
+</menu>
