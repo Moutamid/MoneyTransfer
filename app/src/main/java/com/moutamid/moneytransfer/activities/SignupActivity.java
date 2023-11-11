@@ -26,6 +26,9 @@ public class SignupActivity extends AppCompatActivity {
         binding.toolbar.title.setText("Create Account");
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
 
+        binding.country.setCustomMasterCountries(Constants.CountriesCodes);
+        binding.countryCodePick.setCustomMasterCountries(Constants.CountriesCodes);
+
         binding.login.setOnClickListener(v -> startActivity(new Intent(this, LoginActivity.class)));
 
         binding.create.setOnClickListener(v -> {
@@ -39,9 +42,11 @@ public class SignupActivity extends AppCompatActivity {
                             Constants.auth().getCurrentUser().getUid(),
                             binding.name.getEditText().getText().toString(),
                             "",
-                            (binding.countryPick.getSelectedCountryCodeWithPlus() + binding.number.getText().toString()),
+                            (binding.countryCodePick.getSelectedCountryCodeWithPlus() + "-" + binding.number.getText().toString()),
                             binding.email.getEditText().getText().toString(),
                             binding.password.getEditText().getText().toString(),
+                            binding.country.getSelectedCountryEnglishName(),
+                            binding.country.getSelectedCountryNameCode(),
                             new Rating(0,0,0,0,0)
                     );
                     Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())

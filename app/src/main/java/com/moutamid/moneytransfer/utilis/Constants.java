@@ -33,6 +33,49 @@ public class Constants {
     static Dialog dialog;
     public static final String DATEFORMATE = "dd/MM/yyyy";
     public static final String USER = "USERS";
+    public static final String CountriesCodes = "eg,ae,sa,qa,ma,sd,om,it,ru,sy,ps";
+
+    // Currencies Code
+    public static final String Egypt = "EGP";
+    public static final String UAE = "AED";
+    public static final String Saudi_Arabia = "SAR";
+    public static final String Qatar = "QAR";
+    public static final String Morocco = "MAP";
+    public static final String Sudan = "SDG";
+    public static final String Oman = "OMR";
+    public static final String Italy = "EUR";
+    public static final String Russia = "RUB";
+    public static final String Syria = "SYP";
+    public static final String Palestine = "ILS";
+
+    public static String getCurrencyCode(String countryName) {
+        switch (countryName) {
+            case "Egypt":
+                return Egypt;
+            case "United Arab Emirates":
+                return UAE;
+            case "Saudi Arabia":
+                return Saudi_Arabia;
+            case "Qatar":
+                return Qatar;
+            case "Morocco":
+                return Morocco;
+            case "Sudan":
+                return Sudan;
+            case "Oman":
+                return Oman;
+            case "Italy":
+                return Italy;
+            case "Russia":
+                return Russia;
+            case "Syria":
+                return Syria;
+            case "Palestine":
+                return Palestine;
+            default:
+                return "Unknown Currency Code";
+        }
+    }
 
     public static String getFormattedDate(long date){
         return new SimpleDateFormat(DATEFORMATE, Locale.getDefault()).format(date);

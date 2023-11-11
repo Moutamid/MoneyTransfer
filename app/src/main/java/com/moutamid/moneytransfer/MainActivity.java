@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
+import com.moutamid.moneytransfer.activities.EditProfileActivity;
 import com.moutamid.moneytransfer.activities.SettingsActivity;
 import com.moutamid.moneytransfer.databinding.ActivityMainBinding;
 import com.moutamid.moneytransfer.fragments.ChatFragment;
@@ -48,8 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
         binding.navView.setCheckedItem(R.id.nav_home);
-
-        updateNavHead(binding.navView);
 
         binding.navView.getHeaderView(0).setOnClickListener(view -> {
 //            startActivity(new Intent(this, ProfileActivity.class));
@@ -92,13 +91,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com")));
         }
         if (item.getItemId() == R.id.nav_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, EditProfileActivity.class));
         }
         if (item.getItemId() == R.id.nav_logout) {
             new MaterialAlertDialogBuilder(this).setTitle("Logout").setMessage("Do you really want to logout?")
                     .setPositiveButton("Yes", ((dialog, which) -> {
                         Constants.auth().signOut();
                         startActivity(new Intent(this, SplashScreenActivity.class));
+                        finish();
                     })).setNegativeButton("No", ((dialog, which) -> dialog.dismiss()))
                     .show();
         }
@@ -106,6 +106,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateNavHead(binding.navView);
+    }
 
     @Override
     public void onBackPressed() {

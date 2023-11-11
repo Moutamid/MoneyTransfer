@@ -2,20 +2,38 @@ package com.moutamid.moneytransfer.models;
 
 public class UserModel {
     String ID, name, image, phone, email, password;
-
+    String country, countryCode;
     Rating rating;
 
     public UserModel() {
     }
 
-    public UserModel(String ID, String name, String image, String phone, String email, String password, Rating rating) {
+    public UserModel(String ID, String name, String image, String phone, String email, String password, String country, String countryCode, Rating rating) {
         this.ID = ID;
         this.name = name;
         this.image = image;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.country = country;
+        this.countryCode = countryCode;
         this.rating = rating;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Rating getRating() {

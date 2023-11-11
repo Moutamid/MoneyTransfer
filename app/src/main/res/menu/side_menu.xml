@@ -14,6 +14,10 @@
             android:id="@+id/nav_chat"
             android:icon="@drawable/round_mark_unread_chat_alt_24"
             android:title="Chat" />
+        <item
+            android:id="@+id/nav_transaction"
+            android:icon="@drawable/round_money_24"
+            android:title="Ongoing Transactions" />
 
     </group>
     <item android:title="Support">
@@ -37,7 +41,7 @@
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/round_settings_24"
-                android:title="Setting" />
+                android:title="Edit Profile" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/round_logout_24"
