@@ -97,7 +97,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 (binding.countryCodePick.getSelectedCountryCodeWithPlus() + "-" + binding.number.getText().toString()),
                 userModel.getEmail(),
                 userModel.getPassword(),
-                binding.country.getSelectedCountryEnglishName(),
+                getCountry(),
                 binding.country.getSelectedCountryNameCode(),
                 userModel.getRating()
         );
@@ -111,6 +111,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     Constants.dismissDialog();
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private String getCountry() {
+        return binding.country.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United Arab Emirates" : binding.country.getSelectedCountryEnglishName();
     }
 
     @Override

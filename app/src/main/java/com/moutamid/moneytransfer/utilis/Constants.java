@@ -33,6 +33,12 @@ public class Constants {
     static Dialog dialog;
     public static final String DATEFORMATE = "dd/MM/yyyy";
     public static final String USER = "USERS";
+    public static final String BIDS = "BIDS";
+    public static final String ONGOING_BIDS = "ONGOING_BIDS";
+    public static final String Values = "CountriesRate";
+    public static final String CHATS = "CHATS";
+    public static final String CONVERSATION = "CONVERSATION";
+    public static final String STASH_USER = "STASH_USER";
     public static final String CountriesCodes = "eg,ae,sa,qa,ma,sd,om,it,ru,sy,ps";
 
     // Currencies Code
@@ -47,6 +53,19 @@ public class Constants {
     public static final String Russia = "RUB";
     public static final String Syria = "SYP";
     public static final String Palestine = "ILS";
+
+    //Countries
+    public static final String EGYPT= "Egypt";
+    public static final String ITALY = "Italy";
+    public static final String United_Arab_Emirates = "United_Arab_Emirates";
+    public static final String SAUDI_ARABIA = "Saudi_Arabia";
+    public static final String QATAR = "Qatar";
+    public static final String MOROCCO = "Morocco";
+    public static final String SUDAN = "Sudan";
+    public static final String OMAN = "Oman";
+    public static final String RUSSIA = "Russia";
+    public static final String SYRIA = "Syria";
+    public static final String PALESTINE = "Palestine";
 
     public static String getCurrencyCode(String countryName) {
         switch (countryName) {

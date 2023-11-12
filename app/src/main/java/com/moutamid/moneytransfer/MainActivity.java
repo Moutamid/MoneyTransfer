@@ -8,11 +8,13 @@ import androidx.core.view.GravityCompat;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.fxn.stash.Stash;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.moutamid.moneytransfer.activities.EditProfileActivity;
@@ -20,8 +22,11 @@ import com.moutamid.moneytransfer.activities.SettingsActivity;
 import com.moutamid.moneytransfer.databinding.ActivityMainBinding;
 import com.moutamid.moneytransfer.fragments.ChatFragment;
 import com.moutamid.moneytransfer.fragments.HomeFragment;
+import com.moutamid.moneytransfer.models.CountriesRates;
 import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -67,13 +72,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .get().addOnSuccessListener(dataSnapshot -> {
                     Constants.dismissDialog();
                     UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                    Stash.put(Constants.STASH_USER, userModel);
                     headerName.setText(userModel.getName());
                     headerEmail.setText(userModel.getEmail());
                     Glide.with(MainActivity.this).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(headerImage);
+                    String country = userModel.getCountry().replace(" ", "_");
+                    Log.d("updateNavHead", "updateNavHead: " + country);
+
                 }).addOnFailureListener(e -> {
                     e.printStackTrace();
                     Constants.dismissDialog();
                 });
+
+        ArrayList<CountriesRates> countriesRatesList = new ArrayList<>();
+
+
     }
 
     @Override

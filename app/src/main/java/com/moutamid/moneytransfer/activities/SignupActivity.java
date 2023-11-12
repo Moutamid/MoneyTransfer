@@ -45,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
                             (binding.countryCodePick.getSelectedCountryCodeWithPlus() + "-" + binding.number.getText().toString()),
                             binding.email.getEditText().getText().toString(),
                             binding.password.getEditText().getText().toString(),
-                            binding.country.getSelectedCountryEnglishName(),
+                            getCountry(),
                             binding.country.getSelectedCountryNameCode(),
                             new Rating(0,0,0,0,0)
                     );
@@ -65,6 +65,10 @@ public class SignupActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private String getCountry() {
+        return binding.country.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United Arab Emirates" : binding.country.getSelectedCountryEnglishName();
     }
 
     private boolean valid() {

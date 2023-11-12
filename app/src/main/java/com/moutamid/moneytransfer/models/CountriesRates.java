@@ -2,7 +2,7 @@ package com.moutamid.moneytransfer.models;
 
 public class CountriesRates {
     String name, currencyCode;
-    Rates rates;
+    static Rates rates;
 
     public CountriesRates() {
     }
@@ -10,7 +10,7 @@ public class CountriesRates {
     public CountriesRates(String name, String currencyCode, Rates rates) {
         this.name = name;
         this.currencyCode = currencyCode;
-        this.rates = rates;
+        CountriesRates.rates = rates;
     }
 
     public String getName() {
@@ -37,112 +37,112 @@ public class CountriesRates {
         this.rates = rates;
     }
 
-    public class Rates {
-        double EG, AE, SA, QA, MA, SD, OM, IT, RU, SY, PS;
+    public static class Rates {
+        double Egypt, UAE, Saudi_Arabia, Qatar, Morocco, Sudan, Oman, Italy, Russia, Syria, Palestine;
 
         public Rates() {
         }
 
-        public Rates(double EG, double AE, double SA, double QA, double MA, double SD, double OM, double IT, double RU, double SY, double PS) {
-            this.EG = EG;
-            this.AE = AE;
-            this.SA = SA;
-            this.QA = QA;
-            this.MA = MA;
-            this.SD = SD;
-            this.OM = OM;
-            this.IT = IT;
-            this.RU = RU;
-            this.SY = SY;
-            this.PS = PS;
+        public Rates(double egypt, double uae, double saudi_Arabia, double qatar, double morocco, double sudan, double oman, double italy, double russia, double syria, double palestine) {
+            Egypt = egypt;
+            UAE = uae;
+            Saudi_Arabia = saudi_Arabia;
+            Qatar = qatar;
+            Morocco = morocco;
+            Sudan = sudan;
+            Oman = oman;
+            Italy = italy;
+            Russia = russia;
+            Syria = syria;
+            Palestine = palestine;
         }
 
-        public double getEG() {
-            return EG;
+        public double getEgypt() {
+            return Egypt;
         }
 
-        public void setEG(double EG) {
-            this.EG = EG;
+        public void setEgypt(double egypt) {
+            Egypt = egypt;
         }
 
-        public double getAE() {
-            return AE;
+        public double getUAE() {
+            return UAE;
         }
 
-        public void setAE(double AE) {
-            this.AE = AE;
+        public void setUAE(double UAE) {
+            this.UAE = UAE;
         }
 
-        public double getSA() {
-            return SA;
+        public double getSaudi_Arabia() {
+            return Saudi_Arabia;
         }
 
-        public void setSA(double SA) {
-            this.SA = SA;
+        public void setSaudi_Arabia(double saudi_Arabia) {
+            Saudi_Arabia = saudi_Arabia;
         }
 
-        public double getQA() {
-            return QA;
+        public double getQatar() {
+            return Qatar;
         }
 
-        public void setQA(double QA) {
-            this.QA = QA;
+        public void setQatar(double qatar) {
+            Qatar = qatar;
         }
 
-        public double getMA() {
-            return MA;
+        public double getMorocco() {
+            return Morocco;
         }
 
-        public void setMA(double MA) {
-            this.MA = MA;
+        public void setMorocco(double morocco) {
+            Morocco = morocco;
         }
 
-        public double getSD() {
-            return SD;
+        public double getSudan() {
+            return Sudan;
         }
 
-        public void setSD(double SD) {
-            this.SD = SD;
+        public void setSudan(double sudan) {
+            Sudan = sudan;
         }
 
-        public double getOM() {
-            return OM;
+        public double getOman() {
+            return Oman;
         }
 
-        public void setOM(double OM) {
-            this.OM = OM;
+        public void setOman(double oman) {
+            Oman = oman;
         }
 
-        public double getIT() {
-            return IT;
+        public double getItaly() {
+            return Italy;
         }
 
-        public void setIT(double IT) {
-            this.IT = IT;
+        public void setItaly(double italy) {
+            Italy = italy;
         }
 
-        public double getRU() {
-            return RU;
+        public double getRussia() {
+            return Russia;
         }
 
-        public void setRU(double RU) {
-            this.RU = RU;
+        public void setRussia(double russia) {
+            Russia = russia;
         }
 
-        public double getSY() {
-            return SY;
+        public double getSyria() {
+            return Syria;
         }
 
-        public void setSY(double SY) {
-            this.SY = SY;
+        public void setSyria(double syria) {
+            Syria = syria;
         }
 
-        public double getPS() {
-            return PS;
+        public double getPalestine() {
+            return Palestine;
         }
 
-        public void setPS(double PS) {
-            this.PS = PS;
+        public void setPalestine(double palestine) {
+            Palestine = palestine;
         }
     }
 
