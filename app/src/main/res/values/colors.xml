@@ -11,4 +11,5 @@
     <color name="nav_header">#F7F4FC</color>
     <color name="yellow">#FF9800</color>
     <color name="cha_item">#F3EDFB</color>
+    <color name="cha_item_left">#F7F7F7</color>
 </resources>

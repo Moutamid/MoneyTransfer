@@ -1,6 +1,7 @@
 package com.moutamid.moneytransfer.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.fxn.stash.Stash;
 import com.moutamid.moneytransfer.R;
+import com.moutamid.moneytransfer.activities.ConversationActivity;
 import com.moutamid.moneytransfer.models.ChatModel;
+import com.moutamid.moneytransfer.utilis.Constants;
 
 import java.util.ArrayList;
 
@@ -38,6 +42,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatVH>{
         holder.name.setText(model.getName());
         holder.message.setText(model.getMessage());
         Glide.with(context).load(model.getImage()).placeholder(R.drawable.profile_icon).into(holder.logo);
+
+        holder.itemView.setOnClickListener(v -> {
+            Stash.put(Constants.CHAT_ITEM, model);
+            context.startActivity(new Intent(context, ConversationActivity.class));
+        });
+
     }
 
     @Override

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:gravity="end"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="12dp">
 
@@ -11,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:minWidth="70dp"
-        android:gravity="end"
         app:cardCornerRadius="16dp"
         app:cardBackgroundColor="@color/cha_item">
 

@@ -102,7 +102,7 @@
                             android:id="@+id/tv_nav_yourEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="Rating: "
+                            android:text="Rating: "
                             android:textSize="16sp" />
 
                         <ImageView

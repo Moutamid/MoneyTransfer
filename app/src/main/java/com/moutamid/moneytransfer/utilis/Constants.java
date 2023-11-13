@@ -34,6 +34,8 @@ public class Constants {
     public static final String DATEFORMATE = "dd/MM/yyyy";
     public static final String USER = "USERS";
     public static final String BIDS = "BIDS";
+    public static final String CHAT_ITEM = "CHAT_ITEM";
+    public static final String TRANSACTIONS = "TRANSACTIONS";
     public static final String ONGOING_BIDS = "ONGOING_BIDS";
     public static final String Values = "CountriesRate";
     public static final String CHATS = "CHATS";

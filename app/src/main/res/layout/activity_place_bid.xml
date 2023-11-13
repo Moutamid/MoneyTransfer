@@ -88,7 +88,7 @@
                 app:boxBackgroundColor="@color/grey"
                 app:helperText="in your currency"
                 style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:hint="Your Price">
+                android:hint="Your Amount">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"

@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void updateNavHead(NavigationView navView) {
-        Constants.showDialog();
         View Header = navView.getHeaderView(0);
         headerName = Header.findViewById(R.id.tv_nav_Name);
         headerEmail = Header.findViewById(R.id.tv_nav_yourEmail);
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())
                 .get().addOnSuccessListener(dataSnapshot -> {
-                    Constants.dismissDialog();
                     UserModel userModel = dataSnapshot.getValue(UserModel.class);
                     Stash.put(Constants.STASH_USER, userModel);
                     headerName.setText(userModel.getName());
@@ -81,12 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }).addOnFailureListener(e -> {
                     e.printStackTrace();
-                    Constants.dismissDialog();
                 });
-
-        ArrayList<CountriesRates> countriesRatesList = new ArrayList<>();
-
-
     }
 
     @Override
