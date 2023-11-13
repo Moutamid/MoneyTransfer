@@ -50,7 +50,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         holder.name.setText(model.getTransactionName());
         holder.username.setText(userModel.getName());
-        holder.money.setText(getCurrencyCode(stash.getCountry()) + " " + model.getMoney());
+        holder.money.setText(getCurrencyCode(stash.getCountry()) + " " + model.getAmount_ioc());
         Glide.with(context).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(holder.profile);
 
         String date = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(model.getTimestamp());

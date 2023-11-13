@@ -2,20 +2,29 @@ package com.moutamid.moneytransfer.models;
 
 public class TransactionModel {
     String id, senderID, transactionName;
-    double money;
+    double money, amount_ioc;
     long timestamp;
     UserModel receiver;
 
     public TransactionModel() {
     }
 
-    public TransactionModel(String id, String senderID, String transactionName, double money, long timestamp, UserModel receiver) {
+    public TransactionModel(String id, String senderID, String transactionName, double money, double amount_ioc, long timestamp, UserModel receiver) {
         this.id = id;
         this.senderID = senderID;
         this.transactionName = transactionName;
         this.money = money;
+        this.amount_ioc = amount_ioc;
         this.timestamp = timestamp;
         this.receiver = receiver;
+    }
+
+    public double getAmount_ioc() {
+        return amount_ioc;
+    }
+
+    public void setAmount_ioc(double amount_ioc) {
+        this.amount_ioc = amount_ioc;
     }
 
     public String getTransactionName() {

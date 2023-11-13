@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.fxn.stash.Stash;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +26,9 @@ import com.moutamid.moneytransfer.adapters.ConversationAdapter;
 import com.moutamid.moneytransfer.databinding.ActivityConversationBinding;
 import com.moutamid.moneytransfer.models.ChatModel;
 import com.moutamid.moneytransfer.models.ConversationModel;
+import com.moutamid.moneytransfer.models.CountriesRates;
 import com.moutamid.moneytransfer.models.Rating;
+import com.moutamid.moneytransfer.models.TransactionModel;
 import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
 
@@ -34,6 +37,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConversationActivity extends AppCompatActivity {
@@ -250,6 +254,97 @@ public class ConversationActivity extends AppCompatActivity {
 
     private void completeTransaction() {
 
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.transaction_value);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        dialog.show();
+
+        UserModel stash = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
+        Button complete = dialog.findViewById(R.id.complete);
+        TextInputLayout amount = dialog.findViewById(R.id.amount);
+
+        complete.setOnClickListener(v -> {
+            if (!amount.getEditText().getText().toString().isEmpty()) {
+                Constants.showDialog();
+                String ID = UUID.randomUUID().toString();
+
+                Constants.databaseReference().child(Constants.USER).child(chatModel.getUserID()).get().addOnSuccessListener(dataSnapshot -> {
+                    UserModel model = dataSnapshot.getValue(UserModel.class);
+                    long time = new Date().getTime();
+                    TransactionModel myModel = new TransactionModel(
+                            ID, Constants.auth().getCurrentUser().getUid(), "",
+                            Double.parseDouble(amount.getEditText().getText().toString()),
+                            Double.parseDouble(amount.getEditText().getText().toString()) * getCurrency(stash.getCountry()),
+                            time,
+                            model
+                    );
+                    TransactionModel receiverModel = new TransactionModel(
+                            ID, model.getID(), "",
+                            Double.parseDouble(amount.getEditText().getText().toString()),
+                            Double.parseDouble(amount.getEditText().getText().toString()) * getCurrency(model.getCountry()),
+                            time,
+                            stash
+                    );
+
+                    Constants.databaseReference().child(Constants.TRANSACTIONS).child(Constants.auth().getCurrentUser().getUid())
+                            .push().setValue(myModel)
+                            .addOnSuccessListener(unused -> {
+                                Constants.databaseReference().child(Constants.TRANSACTIONS).child(model.getID())
+                                        .push().setValue(receiverModel)
+                                        .addOnSuccessListener(unused22 -> {
+                                            Constants.dismissDialog();
+                                            Toast.makeText(this, "Transaction Completed!", Toast.LENGTH_SHORT).show();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Constants.dismissDialog();
+                                            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        });
+                            })
+                            .addOnFailureListener(e -> {
+                                Constants.dismissDialog();
+                                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+
+
+                }).addOnFailureListener(e -> {
+                    Constants.dismissDialog();
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+
+
+            }
+        });
+    }
+
+    private double getCurrency(String currency) {
+        CountriesRates countriesRates = (CountriesRates) Stash.getObject(Constants.Values, CountriesRates.class);
+        if (currency.equals(Constants.EGYPT)) {
+            return countriesRates.getRates().getEgypt();
+        } else if (currency.equals(Constants.ITALY)) {
+            return countriesRates.getRates().getItaly();
+        } else if (currency.equals(Constants.United_Arab_Emirates)) {
+            return countriesRates.getRates().getUAE();
+        } else if (currency.equals(Constants.SAUDI_ARABIA)) {
+            return countriesRates.getRates().getSaudi_Arabia();
+        } else if (currency.equals(Constants.QATAR)) {
+            return countriesRates.getRates().getQatar();
+        } else if (currency.equals(Constants.MOROCCO)) {
+            return countriesRates.getRates().getMorocco();
+        } else if (currency.equals(Constants.SUDAN)) {
+            return countriesRates.getRates().getSudan();
+        } else if (currency.equals(Constants.OMAN)) {
+            return countriesRates.getRates().getOman();
+        } else if (currency.equals(Constants.RUSSIA)) {
+            return countriesRates.getRates().getRussia();
+        } else if (currency.equals(Constants.SYRIA)) {
+            return countriesRates.getRates().getSyria();
+        } else if (currency.equals(Constants.PALESTINE)) {
+            return countriesRates.getRates().getPalestine();
+        }
+        return 0;
     }
 
     @Override
