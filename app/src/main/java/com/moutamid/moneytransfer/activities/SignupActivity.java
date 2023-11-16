@@ -47,6 +47,7 @@ public class SignupActivity extends AppCompatActivity {
                             binding.password.getEditText().getText().toString(),
                             getCountry(),
                             binding.country.getSelectedCountryNameCode(),
+                            Constants.getCurrencyCode(getCountry()),
                             new Rating(0,0,0,0,0)
                     );
                     Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())

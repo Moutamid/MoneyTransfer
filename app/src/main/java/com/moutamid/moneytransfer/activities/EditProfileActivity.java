@@ -99,6 +99,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 userModel.getPassword(),
                 getCountry(),
                 binding.country.getSelectedCountryNameCode(),
+                userModel.getCurrencyCode(),
                 userModel.getRating()
         );
         Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())

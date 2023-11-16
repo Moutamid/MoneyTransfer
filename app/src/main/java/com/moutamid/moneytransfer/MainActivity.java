@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.navView.setCheckedItem(R.id.nav_home);
 
         binding.navView.getHeaderView(0).setOnClickListener(view -> {
-//            startActivity(new Intent(this, ProfileActivity.class));
+            startActivity(new Intent(this, EditProfileActivity.class));
         });
 
     }

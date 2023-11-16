@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,18 +28,22 @@ import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> {
+public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implements Filterable {
 
     Context context;
     ArrayList<BidModel> list;
 
+    ArrayList<BidModel> allList;
+
     public BidAdapter(Context context, ArrayList<BidModel> list) {
         this.context = context;
         this.list = list;
+        this.allList = new ArrayList<>(list);
     }
 
     @NonNull
@@ -50,11 +56,12 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> {
     public void onBindViewHolder(@NonNull BidVH holder, int position) {
         BidModel model = list.get(holder.getAbsoluteAdapterPosition());
 
-        holder.from.setText("From " + model.getMyCountry());
+        holder.from.setText(model.getMyCountry());
+        holder.to.setText(model.getBidCountry());
         holder.userName.setText(model.getUsername());
         Glide.with(context).load(model.getUserImage()).placeholder(R.drawable.profile_icon).into(holder.profile);
-
-        holder.money.setText(getCurrencyCode(model.getBidCountry()) + " " + model.getPrice_ioc());
+        String money = (getCurrencyCode(model.getBidCountry()) + " " + model.getPrice_ioc()) + " = " + (getCurrencyCode(model.getMyCountry()) + " " + model.getPrice());
+        holder.money.setText(money);
 
         Rating rating = model.getUserRating();
         int rr = rating.getStar1() + rating.getStar2() + rating.getStar3() + rating.getStar4() + rating.getStar5();
@@ -116,8 +123,40 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> {
         return list.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<BidModel> filterList = new ArrayList<>();
+            if (constraint.toString().isEmpty()){
+                filterList.addAll(allList);
+            } else {
+                for (BidModel listModel : allList){
+                    if (listModel.getMyCountry().toLowerCase().contains(constraint.toString().toLowerCase())){
+                        filterList.add(listModel);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filterList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((Collection<? extends BidModel>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public class BidVH extends RecyclerView.ViewHolder {
-        TextView userName, money, from;
+        TextView userName, money,to, from;
         ImageView star1, star2, star3, star4, star5;
         CircleImageView profile;
         Button accept;
@@ -127,6 +166,7 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> {
             userName = itemView.findViewById(R.id.userName);
             money = itemView.findViewById(R.id.money);
             from = itemView.findViewById(R.id.from);
+            to = itemView.findViewById(R.id.to);
             profile = itemView.findViewById(R.id.profile);
             accept = itemView.findViewById(R.id.accept);
             star1 = itemView.findViewById(R.id.star1);

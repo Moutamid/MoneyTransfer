@@ -17,12 +17,39 @@
         android:layout_below="@id/toolbar"
         android:orientation="vertical"
         android:padding="12dp">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
+            android:layout_weight="1"
             android:text="Search By amount range"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp"
+            android:layout_marginStart="8dp"
+            app:cardBackgroundColor="@color/grey"
+            app:strokeColor="@color/grey"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                app:tint="@color/black"
+                android:src="@drawable/round_filter_alt_24" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

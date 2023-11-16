@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Sort By">
+        <menu>
+            <item
+                android:id="@+id/egypt"
+                android:title="Egypt" />
+            <item
+                android:id="@+id/uae"
+                android:title="United Arab Emirates" />
+            <item
+                android:id="@+id/Saudi_Arabia"
+                android:title="Saudi Arabia" />
+            <item
+                android:id="@+id/Qatar"
+                android:title="Qatar" />
+            <item
+                android:id="@+id/Morocco"
+                android:title="Morocco" />
+            <item
+                android:id="@+id/Sudan"
+                android:title="Sudan" />
+            <item
+                android:id="@+id/Oman"
+                android:title="Oman" />
+            <item
+                android:id="@+id/Italy"
+                android:title="Italy" />
+            <item
+                android:id="@+id/Russia"
+                android:title="Russia" />
+            <item
+                android:id="@+id/Syria"
+                android:title="Syria" />
+            <item
+                android:id="@+id/Palestine"
+                android:title="Palestine" />
+        </menu>
+    </item>
+    <item android:id="@+id/rollback"
+        android:title="Roll Back" />
+</menu>

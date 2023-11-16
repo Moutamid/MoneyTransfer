@@ -3,10 +3,13 @@ package com.moutamid.moneytransfer.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
 import com.fxn.stash.Stash;
+import com.hbb20.CountryCodePicker;
 import com.moutamid.moneytransfer.databinding.ActivityPlaceBidBinding;
 import com.moutamid.moneytransfer.models.BidModel;
 import com.moutamid.moneytransfer.models.CountriesRates;
@@ -46,15 +49,40 @@ public class PlaceBidActivity extends AppCompatActivity {
             }
         });
 
+        binding.countryTo.setOnCountryChangeListener(() -> {
+            double pr = Double.parseDouble(binding.price.getEditText().getText().toString()) * getCurrency();
+            binding.bidAmount.getEditText().setText(pr+"");
+        });
+
+        binding.price.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().isEmpty()){
+                    double pr = Double.parseDouble(s.toString()) * getCurrency();
+                    binding.bidAmount.getEditText().setText(pr+"");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     private void placeBid() {
         BidModel bidModel = new BidModel(UUID.randomUUID().toString(),
                 stashUSer.getID(), stashUSer.getName(), stashUSer.getImage(), stashUSer.getRating(),
                 Double.parseDouble(binding.price.getEditText().getText().toString()),
-                Double.parseDouble(binding.price.getEditText().getText().toString()) * getCurrency(),
+                Double.parseDouble(binding.bidAmount.getEditText().getText().toString()),
                 getCountry(),
-                getCountryTO());
+                getCountryTO(), binding.faceToFace.isChecked());
         Constants.databaseReference().child(Constants.BIDS).child(bidModel.getID())
                 .setValue(bidModel).addOnSuccessListener(unused -> {
                     Constants.dismissDialog();

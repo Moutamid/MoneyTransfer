@@ -6,11 +6,11 @@ public class BidModel {
     Rating userRating;
     double price,price_ioc;
     String myCountry, bidCountry;
-
+    boolean faceToFace;
     public BidModel() {
     }
 
-    public BidModel(String ID, String userID, String username, String userImage, Rating userRating, double price, double price_ioc, String myCountry, String bidCountry) {
+    public BidModel(String ID, String userID, String username, String userImage, Rating userRating, double price, double price_ioc, String myCountry, String bidCountry, boolean faceToFace) {
         this.ID = ID;
         this.userID = userID;
         this.username = username;
@@ -20,6 +20,15 @@ public class BidModel {
         this.price_ioc = price_ioc;
         this.myCountry = myCountry;
         this.bidCountry = bidCountry;
+        this.faceToFace = faceToFace;
+    }
+
+    public boolean isFaceToFace() {
+        return faceToFace;
+    }
+
+    public void setFaceToFace(boolean faceToFace) {
+        this.faceToFace = faceToFace;
     }
 
     public double getPrice_ioc() {

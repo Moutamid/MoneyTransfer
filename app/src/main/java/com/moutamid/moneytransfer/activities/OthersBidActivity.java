@@ -2,6 +2,7 @@ package com.moutamid.moneytransfer.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class OthersBidActivity extends AppCompatActivity {
     ActivityOthersBidBinding binding;
@@ -43,6 +45,10 @@ public class OthersBidActivity extends AppCompatActivity {
         stashUser = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
 
         getAll();
+
+        binding.filter.setOnClickListener(v -> {
+            showPopupMenu(v);
+        });
 
         binding.search.setOnClickListener(v -> {
             if (binding.max.getEditText().getText().toString().isEmpty() && binding.min.getEditText().getText().toString().isEmpty()) {
@@ -76,7 +82,7 @@ public class OthersBidActivity extends AppCompatActivity {
                                         binding.bidRC.setVisibility(View.GONE);
                                         binding.noLayout.setVisibility(View.VISIBLE);
                                     }
-                                    BidAdapter adapter = new BidAdapter(OthersBidActivity.this, list);
+                                    adapter = new BidAdapter(OthersBidActivity.this, list);
                                     binding.bidRC.setAdapter(adapter);
                                 }
                             }).addOnFailureListener(e -> {
@@ -91,6 +97,53 @@ public class OthersBidActivity extends AppCompatActivity {
 
     }
 
+    private void showPopupMenu(View v) {
+        PopupMenu popupMenu = new PopupMenu(OthersBidActivity.this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.sort_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.egypt) {
+                adapter.getFilter().filter("egypt");
+                return true;
+            } else if (itemId == R.id.uae) {
+                adapter.getFilter().filter("United Arab Emirates");
+                return true;
+            } else if (itemId == R.id.Saudi_Arabia) {
+                adapter.getFilter().filter("Saudi Arabia");
+                return true;
+            } else if (itemId == R.id.Qatar) {
+                adapter.getFilter().filter("Qatar");
+                return true;
+            } else if (itemId == R.id.Morocco) {
+                adapter.getFilter().filter("Morocco");
+                return true;
+            } else if (itemId == R.id.Sudan) {
+                adapter.getFilter().filter("Sudan");
+                return true;
+            } else if (itemId == R.id.Oman) {
+                adapter.getFilter().filter("Oman");
+                return true;
+            } else if (itemId == R.id.Italy) {
+                adapter.getFilter().filter("Italy");
+                return true;
+            } else if (itemId == R.id.Russia) {
+                adapter.getFilter().filter("Russia");
+                return true;
+            } else if (itemId == R.id.Syria) {
+                adapter.getFilter().filter("Syria");
+                return true;
+            } else if (itemId == R.id.Palestine) {
+                adapter.getFilter().filter("Palestine");
+                return true;
+            } else if (itemId == R.id.rollback) {
+                adapter.getFilter().filter("");
+                return true;
+            }
+            return false;
+        });
+        popupMenu.show();
+    }
+    BidAdapter adapter;
     private void getAll() {
         Constants.showDialog();
         Constants.databaseReference().child(Constants.BIDS).addValueEventListener(new ValueEventListener() {
@@ -111,7 +164,7 @@ public class OthersBidActivity extends AppCompatActivity {
                         binding.bidRC.setVisibility(View.GONE);
                         binding.noLayout.setVisibility(View.VISIBLE);
                     }
-                    BidAdapter adapter = new BidAdapter(OthersBidActivity.this, list);
+                    adapter = new BidAdapter(OthersBidActivity.this, list);
                     binding.bidRC.setAdapter(adapter);
                 }
                 Constants.dismissDialog();

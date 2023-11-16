@@ -86,16 +86,65 @@
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxBackgroundColor="@color/grey"
-                app:helperText="in your currency"
+                app:helperText="Amount in your currency"
                 style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 android:hint="Your Amount">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:text="0.0"
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bidAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxBackgroundColor="@color/grey"
+                app:helperText="Amount in Bid Currency"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                android:hint="Amount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="0.0"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:cursorVisible="false"
+                    android:clickable="false"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transfer By Bank" />
+
+                <RadioButton
+                    android:id="@+id/faceToFace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Meet Face-to-Face" />
+
+            </RadioGroup>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bid"
