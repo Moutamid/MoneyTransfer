@@ -19,8 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fxn.stash.Stash;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DataSnapshot;
 import com.moutamid.moneytransfer.R;
 import com.moutamid.moneytransfer.activities.AcceptBidsActivity;
+import com.moutamid.moneytransfer.activities.ConversationActivity;
 import com.moutamid.moneytransfer.models.BidModel;
 import com.moutamid.moneytransfer.models.ChatModel;
 import com.moutamid.moneytransfer.models.Rating;
@@ -88,6 +91,29 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
             holder.star5.setImageResource(R.drawable.round_star_24);
         }
 
+        holder.chat.setOnClickListener(v -> {
+            Constants.showDialog();
+            Constants.databaseReference().child(Constants.CHATS).child(Constants.auth().getCurrentUser().getUid())
+                    .get().addOnSuccessListener(snapshot -> {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                ChatModel chatModel = dataSnapshot.getValue(ChatModel.class);
+                                if (chatModel.getUserID().equals(model.getUserID())){
+                                    Stash.put(Constants.CHAT_ITEM, model);
+                                    context.startActivity(new Intent(context, ConversationActivity.class));
+                                    break;
+                                }
+                            }
+                        } else {
+                            Toast.makeText(context, "Chat not available yet", Toast.LENGTH_SHORT).show();
+                        }
+                        Constants.dismissDialog();
+                    }).addOnFailureListener(e -> {
+                        Constants.dismissDialog();
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        });
+
         holder.accept.setOnClickListener(v -> {
             Constants.showDialog();
             String ID = UUID.randomUUID().toString();
@@ -132,11 +158,11 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<BidModel> filterList = new ArrayList<>();
-            if (constraint.toString().isEmpty()){
+            if (constraint.toString().isEmpty()) {
                 filterList.addAll(allList);
             } else {
-                for (BidModel listModel : allList){
-                    if (listModel.getMyCountry().toLowerCase().contains(constraint.toString().toLowerCase())){
+                for (BidModel listModel : allList) {
+                    if (listModel.getMyCountry().toLowerCase().contains(constraint.toString().toLowerCase())) {
                         filterList.add(listModel);
                     }
                 }
@@ -156,10 +182,11 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
     };
 
     public class BidVH extends RecyclerView.ViewHolder {
-        TextView userName, money,to, from;
+        TextView userName, money, to, from;
         ImageView star1, star2, star3, star4, star5;
         CircleImageView profile;
         Button accept;
+        MaterialButton chat;
 
         public BidVH(@NonNull View itemView) {
             super(itemView);
@@ -169,6 +196,7 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
             to = itemView.findViewById(R.id.to);
             profile = itemView.findViewById(R.id.profile);
             accept = itemView.findViewById(R.id.accept);
+            chat = itemView.findViewById(R.id.chat);
             star1 = itemView.findViewById(R.id.star1);
             star2 = itemView.findViewById(R.id.star2);
             star3 = itemView.findViewById(R.id.star3);

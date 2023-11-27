@@ -22,6 +22,7 @@ import java.util.UUID;
 public class PlaceBidActivity extends AppCompatActivity {
     ActivityPlaceBidBinding binding;
     UserModel stashUSer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class PlaceBidActivity extends AppCompatActivity {
         binding.countryTo.setCustomMasterCountries(Constants.CountriesCodes);
         binding.country.setCountryForNameCode(stashUSer.getCountryCode());
         binding.bid.setOnClickListener(v -> {
-            if (binding.price.getEditText().getText().toString().isEmpty()){
+            if (binding.price.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(this, "Enter price in your currency", Toast.LENGTH_SHORT).show();
             } else {
                 Constants.showDialog();
@@ -49,9 +50,25 @@ public class PlaceBidActivity extends AppCompatActivity {
             }
         });
 
+        binding.country.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                Constants.showDialog();
+                String name = getCountry().replace(" ", "_");
+                Constants.databaseReference().child(Constants.Values).child(name).get().addOnSuccessListener(dataSnapshot1 -> {
+                    CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
+                    Stash.put("PLACEEEE", countriesRates);
+                    Constants.dismissDialog();
+                }).addOnFailureListener(e -> {
+                    Constants.dismissDialog();
+                    Toast.makeText(PlaceBidActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+
         binding.countryTo.setOnCountryChangeListener(() -> {
             double pr = Double.parseDouble(binding.price.getEditText().getText().toString()) * getCurrency();
-            binding.bidAmount.getEditText().setText(pr+"");
+            binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
         });
 
         binding.price.getEditText().addTextChangedListener(new TextWatcher() {
@@ -62,9 +79,9 @@ public class PlaceBidActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().isEmpty()){
+                if (!s.toString().isEmpty()) {
                     double pr = Double.parseDouble(s.toString()) * getCurrency();
-                    binding.bidAmount.getEditText().setText(pr+"");
+                    binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
                 }
             }
 
@@ -94,8 +111,17 @@ public class PlaceBidActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Stash.clear("PLACEEEE");
+    }
+
     private double getCurrency() {
-        CountriesRates countriesRates = (CountriesRates) Stash.getObject(Constants.Values, CountriesRates.class);
+        CountriesRates countriesRates = (CountriesRates) Stash.getObject("PLACEEEE", CountriesRates.class);
+        if (countriesRates != null) {
+            countriesRates = (CountriesRates) Stash.getObject(Constants.Values, CountriesRates.class);
+        }
         if (getCountryTO().equals(Constants.EGYPT)) {
             return countriesRates.getRates().getEgypt();
         } else if (getCountryTO().equals(Constants.ITALY)) {
