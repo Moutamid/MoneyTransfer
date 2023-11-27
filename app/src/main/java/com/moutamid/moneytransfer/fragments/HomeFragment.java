@@ -98,8 +98,8 @@ public class HomeFragment extends Fragment {
                     userModel = dataSnapshot.getValue(UserModel.class);
                     updateUI();
                     Constants.dismissDialog();
-
-                    Constants.databaseReference().child(Constants.Values).child(userModel.getCountry()).get().addOnSuccessListener(dataSnapshot1 -> {
+                    String name = userModel.getCountry().replace(" ", "_");
+                    Constants.databaseReference().child(Constants.Values).child(name).get().addOnSuccessListener(dataSnapshot1 -> {
                         CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
                         Stash.put(Constants.Values, countriesRates);
                         updateRecyler();
