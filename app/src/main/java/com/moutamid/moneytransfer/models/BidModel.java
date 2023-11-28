@@ -7,10 +7,11 @@ public class BidModel {
     double price,price_ioc;
     String myCountry, bidCountry;
     boolean faceToFace;
+    long timestamp;
     public BidModel() {
     }
 
-    public BidModel(String ID, String userID, String username, String userImage, Rating userRating, double price, double price_ioc, String myCountry, String bidCountry, boolean faceToFace) {
+    public BidModel(String ID, String userID, String username, String userImage, Rating userRating, double price, double price_ioc, String myCountry, String bidCountry, boolean faceToFace, long timestamp) {
         this.ID = ID;
         this.userID = userID;
         this.username = username;
@@ -21,6 +22,15 @@ public class BidModel {
         this.myCountry = myCountry;
         this.bidCountry = bidCountry;
         this.faceToFace = faceToFace;
+        this.timestamp = timestamp;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public boolean isFaceToFace() {

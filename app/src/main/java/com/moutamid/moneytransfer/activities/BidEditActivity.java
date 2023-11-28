@@ -2,6 +2,7 @@ package com.moutamid.moneytransfer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,36 +10,51 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.fxn.stash.Stash;
-import com.hbb20.CountryCodePicker;
-import com.moutamid.moneytransfer.databinding.ActivityPlaceBidBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.moutamid.moneytransfer.R;
+import com.moutamid.moneytransfer.SplashScreenActivity;
+import com.moutamid.moneytransfer.databinding.ActivityBidEditBinding;
 import com.moutamid.moneytransfer.models.BidModel;
 import com.moutamid.moneytransfer.models.CountriesRates;
-import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
 
-import java.text.Bidi;
 import java.util.Date;
 import java.util.IllegalFormatPrecisionException;
 import java.util.UUID;
 
-public class PlaceBidActivity extends AppCompatActivity {
-    ActivityPlaceBidBinding binding;
-    UserModel stashUSer;
+public class BidEditActivity extends AppCompatActivity {
+    ActivityBidEditBinding binding;
+    String ID;
+    BidModel bidModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityPlaceBidBinding.inflate(getLayoutInflater());
+        binding = ActivityBidEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.toolbar.title.setText("Place Your Bid");
-        binding.toolbar.back.setOnClickListener(v -> onBackPressed());
+        ID = getIntent().getStringExtra("ID");
         Constants.initDialog(this);
-        stashUSer = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
+
+        binding.toolbar.title.setText("Edit Your Bid");
+        binding.toolbar.back.setOnClickListener(v -> onBackPressed());
+        binding.toolbar.popup.setVisibility(View.VISIBLE);
+        binding.toolbar.secondIcon.setImageResource(R.drawable.round_delete_24);
+
+        binding.toolbar.popup.setOnClickListener(v -> {
+            new MaterialAlertDialogBuilder(this).setTitle("Delete Bid").setMessage("Do you really want to delete this bid?")
+                    .setPositiveButton("Yes", ((dialog, which) -> {
+                        dialog.dismiss();
+                        deleteBid();
+                    })).setNegativeButton("No", ((dialog, which) -> dialog.dismiss()))
+                    .show();
+        });
 
         binding.country.setCustomMasterCountries(Constants.CountriesCodes);
         binding.countryTo.setCustomMasterCountries(Constants.CountriesCodes);
-        binding.country.setCountryForNameCode(stashUSer.getCountryCode());
+
+        getData();
+
         binding.bid.setOnClickListener(v -> {
             if (binding.price.getEditText().getText().toString().isEmpty()) {
                 Toast.makeText(this, "Enter price in your currency", Toast.LENGTH_SHORT).show();
@@ -63,7 +79,7 @@ public class PlaceBidActivity extends AppCompatActivity {
                 binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
             }).addOnFailureListener(e -> {
                 Constants.dismissDialog();
-                Toast.makeText(PlaceBidActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BidEditActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         });
 
@@ -85,7 +101,7 @@ public class PlaceBidActivity extends AppCompatActivity {
                         double pr = Double.parseDouble(s.toString()) * getCurrency();
                         binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
                     }
-                } catch (IllegalFormatPrecisionException e ){
+                } catch (IllegalFormatPrecisionException e) {
                     e.printStackTrace();
                 }
             }
@@ -96,30 +112,62 @@ public class PlaceBidActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void getData() {
+        Constants.showDialog();
+        Constants.databaseReference().child(Constants.BIDS).child(ID).get().addOnSuccessListener(dataSnapshot -> {
+            if (dataSnapshot.exists()) {
+                bidModel = dataSnapshot.getValue(BidModel.class);
+                if (bidModel.isFaceToFace()) {
+                    binding.faceToFace.setChecked(true);
+                } else {
+                    binding.transfer.setChecked(true);
+                }
+                binding.country.setCountryForNameCode(Constants.getNameCode(bidModel.getMyCountry()));
+                binding.countryTo.setCountryForNameCode(Constants.getNameCode(bidModel.getBidCountry()));
+                binding.bidAmount.getEditText().setText(bidModel.getPrice_ioc() + "");
+                binding.price.getEditText().setText(bidModel.getPrice() + "");
+
+            }
+            Constants.dismissDialog();
+        }).addOnFailureListener(e -> {
+            Constants.dismissDialog();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void deleteBid() {
+        Constants.showDialog();
+        Constants.databaseReference().child(Constants.BIDS).child(bidModel.getID()).removeValue()
+                .addOnFailureListener(e -> {
+                    Constants.dismissDialog();
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }).addOnSuccessListener(unused -> {
+                    Constants.dismissDialog();
+                    Toast.makeText(this, "Bid Deleted", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                });
     }
 
     private void placeBid() {
-        BidModel bidModel = new BidModel(UUID.randomUUID().toString(),
-                stashUSer.getID(), stashUSer.getName(), stashUSer.getImage(), stashUSer.getRating(),
-                Double.parseDouble(binding.price.getEditText().getText().toString()),
-                Double.parseDouble(binding.bidAmount.getEditText().getText().toString()),
-                getCountry(),
-                getCountryTO(), binding.faceToFace.isChecked(), new Date().getTime());
+        bidModel.setMyCountry(getCountry());
+        bidModel.setBidCountry(getCountryTO());
+        bidModel.setFaceToFace(binding.faceToFace.isChecked());
+        bidModel.setTimestamp(new Date().getTime());
+        bidModel.setPrice_ioc(Double.parseDouble(binding.bidAmount.getEditText().getText().toString()));
+        bidModel.setPrice(Double.parseDouble(binding.price.getEditText().getText().toString()));
+
         Constants.databaseReference().child(Constants.BIDS).child(bidModel.getID())
                 .setValue(bidModel).addOnSuccessListener(unused -> {
                     Constants.dismissDialog();
-                    Toast.makeText(this, "Your Bid is Placed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Your Bid is Updated", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }).addOnFailureListener(e -> {
                     Constants.dismissDialog();
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Stash.clear("PLACEEEE");
     }
 
     private double getCurrency() {
@@ -160,5 +208,6 @@ public class PlaceBidActivity extends AppCompatActivity {
     private String getCountry() {
         return binding.country.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United Arab Emirates" : binding.country.getSelectedCountryEnglishName();
     }
+
 
 }

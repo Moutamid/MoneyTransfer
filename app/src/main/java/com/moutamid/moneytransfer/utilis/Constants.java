@@ -69,6 +69,36 @@ public class Constants {
     public static final String SYRIA = "Syria";
     public static final String PALESTINE = "Palestine";
 
+    public static String getNameCode(String myCountry) {
+        // "eg,ae,sa,qa,ma,sd,om,it,ru,sy,ps"
+        switch (myCountry) {
+            case "Egypt":
+                return "eg";
+            case "United Arab Emirates":
+                return "ae";
+            case "Saudi Arabia":
+                return "sa";
+            case "Qatar":
+                return "qa";
+            case "Morocco":
+                return "ma";
+            case "Sudan":
+                return "sd";
+            case "Oman":
+                return "om";
+            case "Italy":
+                return "it";
+            case "Russia":
+                return "ru";
+            case "Syria":
+                return "sy";
+            case "Palestine":
+                return "ps";
+            default:
+                return "Unknown Country Code";
+        }
+    }
+
     public static String getCurrencyCode(String countryName) {
         switch (countryName) {
             case "Egypt":
@@ -189,5 +219,4 @@ public class Constants {
     public static StorageReference storageReference(String auth) {
         return FirebaseStorage.getInstance().getReference().child("moneyTransfer").child(auth);
     }
-
 }

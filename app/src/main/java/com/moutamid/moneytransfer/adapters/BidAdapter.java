@@ -30,8 +30,10 @@ import com.moutamid.moneytransfer.models.Rating;
 import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -65,6 +67,9 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
         Glide.with(context).load(model.getUserImage()).placeholder(R.drawable.profile_icon).into(holder.profile);
         String money = (getCurrencyCode(model.getBidCountry()) + " " + model.getPrice_ioc()) + " = " + (getCurrencyCode(model.getMyCountry()) + " " + model.getPrice());
         holder.money.setText(money);
+
+        String date = new SimpleDateFormat("dd/MM/yyyy - HH:mm", Locale.getDefault()).format(model.getTimestamp());
+        holder.date.setText(date);
 
         Rating rating = model.getUserRating();
         int rr = rating.getStar1() + rating.getStar2() + rating.getStar3() + rating.getStar4() + rating.getStar5();
@@ -182,7 +187,7 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
     };
 
     public class BidVH extends RecyclerView.ViewHolder {
-        TextView userName, money, to, from;
+        TextView userName, money, to, from, date;
         ImageView star1, star2, star3, star4, star5;
         CircleImageView profile;
         Button accept;
@@ -194,6 +199,7 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
             money = itemView.findViewById(R.id.money);
             from = itemView.findViewById(R.id.from);
             to = itemView.findViewById(R.id.to);
+            date = itemView.findViewById(R.id.date);
             profile = itemView.findViewById(R.id.profile);
             accept = itemView.findViewById(R.id.accept);
             chat = itemView.findViewById(R.id.chat);

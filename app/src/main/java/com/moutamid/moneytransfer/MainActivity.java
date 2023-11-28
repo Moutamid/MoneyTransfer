@@ -22,6 +22,7 @@ import com.moutamid.moneytransfer.activities.SettingsActivity;
 import com.moutamid.moneytransfer.databinding.ActivityMainBinding;
 import com.moutamid.moneytransfer.fragments.ChatFragment;
 import com.moutamid.moneytransfer.fragments.HomeFragment;
+import com.moutamid.moneytransfer.fragments.MyBidsFragment;
 import com.moutamid.moneytransfer.models.CountriesRates;
 import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (item.getItemId() == R.id.nav_chat) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).commit();
+        }
+        if (item.getItemId() == R.id.nav_bids) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyBidsFragment()).commit();
         }
         if (item.getItemId() == R.id.nav_Support) {
             startActivity(Intent.createChooser(new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:help@example.com")), ""));
