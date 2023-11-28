@@ -17,6 +17,7 @@ import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
 
 import java.text.Bidi;
+import java.util.IllegalFormatPrecisionException;
 import java.util.UUID;
 
 public class PlaceBidActivity extends AppCompatActivity {
@@ -50,20 +51,19 @@ public class PlaceBidActivity extends AppCompatActivity {
             }
         });
 
-        binding.country.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
-            @Override
-            public void onCountrySelected() {
-                Constants.showDialog();
-                String name = getCountry().replace(" ", "_");
-                Constants.databaseReference().child(Constants.Values).child(name).get().addOnSuccessListener(dataSnapshot1 -> {
-                    CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
-                    Stash.put("PLACEEEE", countriesRates);
-                    Constants.dismissDialog();
-                }).addOnFailureListener(e -> {
-                    Constants.dismissDialog();
-                    Toast.makeText(PlaceBidActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-            }
+        binding.country.setOnCountryChangeListener(() -> {
+            Constants.showDialog();
+            String name = getCountry().replace(" ", "_");
+            Constants.databaseReference().child(Constants.Values).child(name).get().addOnSuccessListener(dataSnapshot1 -> {
+                CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
+                Stash.put("PLACEEEE", countriesRates);
+                Constants.dismissDialog();
+                double pr = Double.parseDouble(binding.price.getEditText().getText().toString()) * getCurrency();
+                binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
+            }).addOnFailureListener(e -> {
+                Constants.dismissDialog();
+                Toast.makeText(PlaceBidActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
         });
 
         binding.countryTo.setOnCountryChangeListener(() -> {
@@ -79,9 +79,13 @@ public class PlaceBidActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().isEmpty()) {
-                    double pr = Double.parseDouble(s.toString()) * getCurrency();
-                    binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
+                try {
+                    if (!s.toString().isEmpty()) {
+                        double pr = Double.parseDouble(s.toString()) * getCurrency();
+                        binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
+                    }
+                } catch (IllegalFormatPrecisionException e ){
+                    e.printStackTrace();
                 }
             }
 
@@ -119,7 +123,7 @@ public class PlaceBidActivity extends AppCompatActivity {
 
     private double getCurrency() {
         CountriesRates countriesRates = (CountriesRates) Stash.getObject("PLACEEEE", CountriesRates.class);
-        if (countriesRates != null) {
+        if (countriesRates == null) {
             countriesRates = (CountriesRates) Stash.getObject(Constants.Values, CountriesRates.class);
         }
         if (getCountryTO().equals(Constants.EGYPT)) {
