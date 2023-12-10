@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="100dp"
             android:layout_marginStart="12dp"
-            app:cardBackgroundColor="@color/violet"
-            app:strokeColor="@color/light2"
+            app:cardBackgroundColor="@color/cha_item_left"
+            app:strokeColor="@color/cha_item"
             app:cardElevation="0dp">
 
             <ImageView
@@ -29,7 +29,7 @@
                 android:layout_height="24dp"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
-                app:tint="@color/white"
+                app:tint="@color/text_off"
                 android:src="@drawable/round_arrow_back_ios_24" />
 
         </com.google.android.material.card.MaterialCardView>

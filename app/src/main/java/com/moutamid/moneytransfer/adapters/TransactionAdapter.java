@@ -49,37 +49,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         UserModel stash = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
 
         holder.name.setText(model.getTransactionName());
-        holder.username.setText(userModel.getName());
         holder.money.setText(getCurrencyCode(stash.getCountry()) + " " + model.getAmount_ioc());
         Glide.with(context).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(holder.profile);
 
         String date = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(model.getTimestamp());
         holder.date.setText(date);
-
-        Rating rating = userModel.getRating();
-        int rr = rating.getStar1() + rating.getStar2() + rating.getStar3() + rating.getStar4() + rating.getStar5();
-        double rate = rr / 5;
-        if (rate > 0.0) {
-            holder.star1.setImageResource(R.drawable.round_star_24);
-        } else if (rate >= 1.0) {
-            holder.star1.setImageResource(R.drawable.round_star_24);
-            holder.star2.setImageResource(R.drawable.round_star_24);
-        } else if (rate >= 2.0) {
-            holder.star1.setImageResource(R.drawable.round_star_24);
-            holder.star2.setImageResource(R.drawable.round_star_24);
-            holder.star3.setImageResource(R.drawable.round_star_24);
-        } else if (rate >= 3.0) {
-            holder.star1.setImageResource(R.drawable.round_star_24);
-            holder.star2.setImageResource(R.drawable.round_star_24);
-            holder.star3.setImageResource(R.drawable.round_star_24);
-            holder.star4.setImageResource(R.drawable.round_star_24);
-        } else if (rate >= 4.0) {
-            holder.star1.setImageResource(R.drawable.round_star_24);
-            holder.star2.setImageResource(R.drawable.round_star_24);
-            holder.star3.setImageResource(R.drawable.round_star_24);
-            holder.star4.setImageResource(R.drawable.round_star_24);
-            holder.star5.setImageResource(R.drawable.round_star_24);
-        }
     }
 
     @Override
@@ -88,21 +62,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     public class TransactionVH extends RecyclerView.ViewHolder{
-        TextView name, money,date, username;
-        CircleImageView profile;
-        ImageView star1, star2, star3, star4, star5;
+        TextView name, money,date;
+        ImageView profile;
         public TransactionVH(@NonNull View itemView) {
             super(itemView);
             profile = itemView.findViewById(R.id.img_nav_logo);
             money = itemView.findViewById(R.id.money);
             name = itemView.findViewById(R.id.name);
             date = itemView.findViewById(R.id.date);
-            username = itemView.findViewById(R.id.tv_nav_Name);
-            star1 = itemView.findViewById(R.id.star1);
-            star2 = itemView.findViewById(R.id.star2);
-            star3 = itemView.findViewById(R.id.star3);
-            star4 = itemView.findViewById(R.id.star4);
-            star5 = itemView.findViewById(R.id.star5);
         }
     }
 }

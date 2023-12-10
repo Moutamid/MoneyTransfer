@@ -22,16 +22,19 @@ import com.moutamid.moneytransfer.MainActivity;
 import com.moutamid.moneytransfer.R;
 import com.moutamid.moneytransfer.activities.OthersBidActivity;
 import com.moutamid.moneytransfer.activities.PlaceBidActivity;
+import com.moutamid.moneytransfer.activities.SettingsActivity;
 import com.moutamid.moneytransfer.adapters.CurrencyAdapter;
 import com.moutamid.moneytransfer.adapters.TransactionAdapter;
 import com.moutamid.moneytransfer.databinding.FragmentHomeBinding;
 import com.moutamid.moneytransfer.models.CountriesRates;
+import com.moutamid.moneytransfer.models.CurrenciesModel;
 import com.moutamid.moneytransfer.models.Rating;
 import com.moutamid.moneytransfer.models.TransactionModel;
 import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 
 public class HomeFragment extends Fragment {
@@ -49,6 +52,9 @@ public class HomeFragment extends Fragment {
 
         binding.placeBid.setOnClickListener(v -> startActivity(new Intent(requireContext(), PlaceBidActivity.class)));
         binding.othersBid.setOnClickListener(v -> startActivity(new Intent(requireContext(), OthersBidActivity.class)));
+        binding.chats.setOnClickListener(v -> startActivity(new Intent(requireContext(), OthersBidActivity.class)));
+        binding.myBid.setOnClickListener(v -> startActivity(new Intent(requireContext(), OthersBidActivity.class)));
+        binding.setting.setOnClickListener(v -> startActivity(new Intent(requireContext(), SettingsActivity.class)));
 
         list = new ArrayList<>();
 
@@ -114,47 +120,71 @@ public class HomeFragment extends Fragment {
     private void updateRecyler() {
         CountriesRates countriesRates = (CountriesRates) Stash.getObject(Constants.Values, CountriesRates.class);
         String name =  countriesRates.getName().equals("United_Arab_Emirates") ? "uae" : countriesRates.getName();
-        ArrayList<String> rateList = getRateList(name, countriesRates.getRates());
+        ArrayList<CurrenciesModel> rateList = getRateList(name, countriesRates.getRates());
         CurrencyAdapter adapter = new CurrencyAdapter(requireContext(), rateList);
         binding.currencyRC.setHasFixedSize(false);
         binding.currencyRC.setAdapter(adapter);
     }
 
-    private ArrayList<String> getRateList(String name, CountriesRates.Rates rates) {
-        ArrayList<String> ratesList = new ArrayList<>();
+    private ArrayList<CurrenciesModel> getRateList(String name, CountriesRates.Rates rates) {
+        ArrayList<CurrenciesModel> ratesList = new ArrayList<>();
         if (rates != null) {
             java.lang.reflect.Field[] fields = CountriesRates.Rates.class.getDeclaredFields();
             for (java.lang.reflect.Field field : fields) {
                 String fieldName = field.getName();
                 String currency = "";
+                String country = "";
+                int icon = 0;
                 Log.d("getRateList", "getRateList: " + fieldName);
                 if (!fieldName.equalsIgnoreCase(name)) {
-                    if (fieldName.equalsIgnoreCase("egypt")){
+                    if (fieldName.equalsIgnoreCase("egypt")) {
+                        icon = R.drawable.eg;
+                        country = "Egypt";
                         currency = Constants.getCurrencyCode("Egypt");
                     } else if (fieldName.equalsIgnoreCase("italy")){
+                        icon = R.drawable.it;
+                        country = "Italy";
                         currency = Constants.getCurrencyCode("Italy");
                     } else if (fieldName.equalsIgnoreCase("morocco")){
+                        icon = R.drawable.ma;
+                        country = "Morocco";
                         currency = Constants.getCurrencyCode("Morocco");
                     } else if (fieldName.equalsIgnoreCase("oman")){
+                        icon = R.drawable.om;
+                        country = "Oman";
                         currency = Constants.getCurrencyCode("Oman");
                     } else if (fieldName.equalsIgnoreCase("palestine")){
+                        icon = R.drawable.ps;
+                        country = "Palestine";
                         currency = Constants.getCurrencyCode("Palestine");
                     } else if (fieldName.equalsIgnoreCase("qatar")){
+                        icon = R.drawable.qa;
+                        country = "Qatar";
                         currency = Constants.getCurrencyCode("Qatar");
                     } else if (fieldName.equalsIgnoreCase("russia")){
+                        icon = R.drawable.ru;
+                        country = "Russia";
                         currency = Constants.getCurrencyCode("Russia");
                     } else if (fieldName.equalsIgnoreCase("saudi_Arabia")){
+                        icon = R.drawable.sa;
+                        country = "Saudi Arabia";
                         currency = Constants.getCurrencyCode("Saudi Arabia");
                     } else if (fieldName.equalsIgnoreCase("sudan")){
+                        icon = R.drawable.sd;
+                        country = "Sudan";
                         currency = Constants.getCurrencyCode("Sudan");
                     } else if (fieldName.equalsIgnoreCase("syria")){
+                        icon = R.drawable.sy;
+                        country = "Syria";
                         currency = Constants.getCurrencyCode("Syria");
                     } else if (fieldName.equalsIgnoreCase("uae")){
+                        icon = R.drawable.ae;
+                        country = "United Arab Emirates";
                         currency = Constants.getCurrencyCode("United Arab Emirates");
                     }
                     try {
                         field.setAccessible(true);
-                        ratesList.add(currency + " " + field.get(rates));
+                        ratesList.add(new CurrenciesModel(currency + " " + field.get(rates), country, icon));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } finally {
@@ -168,32 +198,24 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateUI() {
+        binding.wish.setText(getWish());
         binding.tvNavName.setText(userModel.getName());
         binding.currencyRate.setText("Currency Rate for " + userModel.getCountry());
         Glide.with(HomeFragment.this).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(binding.imgNavLogo);
-        Rating rating = userModel.getRating();
-        int rr = rating.getStar1() + rating.getStar2() + rating.getStar3() + rating.getStar4() + rating.getStar5();
-        double rate = rr / 5;
-        if (rate > 0.0){
-            binding.star1.setImageResource(R.drawable.round_star_24);
-        } else if (rate >= 1.0){
-            binding.star1.setImageResource(R.drawable.round_star_24);
-            binding.star2.setImageResource(R.drawable.round_star_24);
-        } else if (rate >= 2.0){
-            binding.star1.setImageResource(R.drawable.round_star_24);
-            binding.star2.setImageResource(R.drawable.round_star_24);
-            binding.star3.setImageResource(R.drawable.round_star_24);
-        } else if (rate >= 3.0){
-            binding.star1.setImageResource(R.drawable.round_star_24);
-            binding.star2.setImageResource(R.drawable.round_star_24);
-            binding.star3.setImageResource(R.drawable.round_star_24);
-            binding.star4.setImageResource(R.drawable.round_star_24);
-        } else if (rate >= 4.0){
-            binding.star1.setImageResource(R.drawable.round_star_24);
-            binding.star2.setImageResource(R.drawable.round_star_24);
-            binding.star3.setImageResource(R.drawable.round_star_24);
-            binding.star4.setImageResource(R.drawable.round_star_24);
-            binding.star5.setImageResource(R.drawable.round_star_24);
+    }
+
+    private String getWish() {
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+        if(timeOfDay < 12){
+            return  "Good Morning";
+        }else if(timeOfDay < 16){
+            return "Good Afternoon";
+        }else if(timeOfDay < 21){
+            return "Good Evening";
+        }else {
+            return "Good Night";
         }
     }
 }
