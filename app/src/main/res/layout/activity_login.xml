@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/primary"
     tools:context=".activities.LoginActivity">
 
     <include
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Welcome back!"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Ready to dive into hassle-free transactions?"
-                android:textColor="@color/black"
+                android:textColor="@color/text"
                 android:textSize="16sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -46,18 +46,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                app:boxBackgroundColor="@color/grey"
+                app:boxBackgroundColor="@color/second"
                 android:layout_marginTop="10dp"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxStrokeWidth="0dp"
+                app:hintTextColor="@color/text"
+                android:textColorHint="@color/text"
                 app:boxStrokeWidthFocused="0dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColor="@color/white"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -69,18 +72,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="Password"
-                app:boxBackgroundColor="@color/grey"
+                app:boxBackgroundColor="@color/second"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxStrokeWidth="0dp"
+                app:hintTextColor="@color/text"
+                android:textColorHint="@color/text"
+                app:passwordToggleTint="@color/text"
                 app:boxStrokeWidthFocused="0dp"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColor="@color/white"
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -95,7 +102,7 @@
                 android:text="Forgot Password?"
                 android:textColor="@color/red"
                 android:layout_marginTop="6dp"
-                app:backgroundTint="@color/white"
+                app:backgroundTint="@color/primary"
                 app:cornerRadius="12dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -104,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:padding="12dp"
+                app:backgroundTint="@color/light"
                 android:text="Login"
                 android:textSize="16sp"
                 app:cornerRadius="12dp" />
@@ -113,10 +121,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
-                app:rippleColor="@color/light"
-                android:text="Don't have Account? Create Now"
-                android:textColor="@color/violet"
-                app:backgroundTint="@color/white"
+                android:text="@string/don_t_have_account_create_now"
+                android:textColor="@color/text"
                 android:textSize="16sp"
                 app:cornerRadius="12dp" />
 

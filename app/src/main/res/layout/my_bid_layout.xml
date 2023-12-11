@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    app:cardBackgroundColor="@color/grey"
+    app:cardBackgroundColor="@color/second"
     app:cardCornerRadius="26dp"
     app:cardElevation="0dp"
     app:strokeWidth="0dp">
@@ -27,7 +27,7 @@
                 android:id="@+id/from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="Egypt" />
@@ -35,6 +35,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:tint="@color/text"
                 android:src="@drawable/round_arrow_right_alt_24"
                 android:layout_marginHorizontal="10dp" />
 
@@ -42,7 +43,7 @@
                 android:id="@+id/to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="Sudan" />
@@ -60,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/violet"
+                android:textColor="@color/light2"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="AE 12.36 = SR 1234" />
@@ -69,6 +70,7 @@
                 android:id="@+id/accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:backgroundTint="@color/text"
                 android:text="Edit Bid" />
 
         </LinearLayout>
@@ -78,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
+            android:textColor="@color/text"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
             tools:text="12/12/2000 - 12:20" />

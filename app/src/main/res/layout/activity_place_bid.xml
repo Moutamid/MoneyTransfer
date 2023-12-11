@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/primary"
     tools:context=".activities.PlaceBidActivity">
 
     <include
@@ -14,126 +14,135 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_below="@id/toolbar">
+        android:layout_below="@id/toolbar"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="12dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="12dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Select Your Country" />
+                android:text="Select Your Country"
+                android:textColor="@color/text"
+                android:textSize="16sp" />
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:ccp_autoDetectCountry="false"
-                app:ccp_defaultNameCode="ae"
-                app:ccp_showNameCode="false"
-                app:ccp_showFullName="true"
-                app:ccp_showPhoneCode="false"
-                android:padding="5dp"
-                app:ccpDialog_showPhoneCode="false"
-                app:ccp_contentColor="@color/black"
-                app:ccpDialog_background="@drawable/text_bg"
-                app:ccpDialog_textColor="@color/black"
-                app:ccpDialog_showCloseIcon="true"
                 android:background="@drawable/text_bg"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:padding="5dp"
+                app:ccpDialog_background="@drawable/text_bg"
+                app:ccpDialog_showCloseIcon="true"
+                app:ccpDialog_showPhoneCode="false"
+                app:ccpDialog_textColor="@color/white"
+                app:ccp_autoDetectCountry="false"
+                app:ccp_contentColor="@color/white"
+                app:ccp_defaultNameCode="ae"
+                app:ccp_showFullName="true"
+                app:ccp_showNameCode="false"
+                app:ccp_showPhoneCode="false" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Bid Place In Country" />
+                android:text="Bid Place In Country"
+                android:textColor="@color/text"
+                android:textSize="16sp" />
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/countryTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:ccp_autoDetectCountry="false"
-                app:ccp_defaultNameCode="eg"
-                app:ccp_showNameCode="false"
-                app:ccp_showFullName="true"
-                app:ccp_showPhoneCode="false"
-                android:padding="5dp"
-                app:ccpDialog_showPhoneCode="false"
-                app:ccp_contentColor="@color/black"
-                app:ccpDialog_background="@drawable/text_bg"
-                app:ccpDialog_textColor="@color/black"
-                app:ccpDialog_showCloseIcon="true"
                 android:background="@drawable/text_bg"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:padding="5dp"
+                app:ccpDialog_background="@drawable/text_bg"
+                app:ccpDialog_showCloseIcon="true"
+                app:ccpDialog_showPhoneCode="false"
+                app:ccpDialog_textColor="@color/white"
+                app:ccp_autoDetectCountry="false"
+                app:ccp_contentColor="@color/white"
+                app:ccp_defaultNameCode="eg"
+                app:ccp_showFullName="true"
+                app:ccp_showNameCode="false"
+                app:ccp_showPhoneCode="false" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/price"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
+                android:hint="Your Amount"
+                android:textColorHint="@color/text"
+                app:boxBackgroundColor="@color/grey"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
-                app:boxBackgroundColor="@color/grey"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:helperText="Amount in your currency"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:hint="Your Amount">
+                app:helperTextTextColor="@color/text"
+                app:hintTextColor="@color/text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
                     android:text="0.0"
-                    android:inputType="numberDecimal" />
+                    android:textColor="@color/white" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bidAmount"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
+                android:hint="Amount"
+                android:textColorHint="@color/text"
+                app:boxBackgroundColor="@color/grey"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
-                app:boxBackgroundColor="@color/grey"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
                 app:helperText="Amount in Bid Currency"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:hint="Amount">
+                app:helperTextTextColor="@color/text"
+                app:hintTextColor="@color/text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="0.0"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
-                    android:cursorVisible="false"
                     android:clickable="false"
-                    android:inputType="numberDecimal" />
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="numberDecimal"
+                    android:text="0.0"
+                    android:textColor="@color/white" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
                 android:layout_marginTop="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Your Preference" />
+                android:paddingVertical="10dp"
+                android:text="Your Preference"
+                android:textColor="@color/text"
+                android:textSize="16sp" />
 
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
@@ -148,11 +157,11 @@
                     android:checkable="true"
                     android:clickable="true"
                     android:focusable="true"
-                    app:chipCornerRadius="12dp"
-                    app:chipStartPadding="12dp"
-                    app:chipEndPadding="12dp"
                     android:text="Transfer By Bank"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:chipCornerRadius="12dp"
+                    app:chipEndPadding="12dp"
+                    app:chipStartPadding="12dp" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/faceToFace"
@@ -160,14 +169,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checkable="true"
+                    android:checked="false"
                     android:clickable="true"
                     android:focusable="true"
-                    android:checked="false"
-                    app:chipCornerRadius="12dp"
-                    app:chipStartPadding="12dp"
-                    app:chipEndPadding="12dp"
                     android:text="Meet Face-to-Face"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:chipCornerRadius="12dp"
+                    app:chipEndPadding="12dp"
+                    app:chipStartPadding="12dp" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -175,11 +184,12 @@
                 android:id="@+id/bid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cornerRadius="12dp"
-                android:padding="12dp"
-                android:textSize="16sp"
                 android:layout_marginTop="12dp"
-                android:text="Place Bid" />
+                android:padding="12dp"
+                android:text="Place Bid"
+                android:textSize="16sp"
+                android:backgroundTint="@color/light"
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/primary"
     app:cardCornerRadius="26dp"
     android:layout_margin="15dp"
     app:strokeWidth="0dp">
@@ -12,13 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="26dp">
 
 
     <TextView
         android:id="@+id/tv_nav_yourEmail"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
+        android:textColor="@color/text"
         android:textSize="16sp"
         android:text="Enter amount of the contract" />
 
@@ -28,18 +29,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Amount"
-            app:boxBackgroundColor="@color/grey"
+            app:boxBackgroundColor="@color/second"
             android:layout_marginTop="10dp"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeWidth="0dp"
+            app:hintTextColor="@color/text"
+            android:textColorHint="@color/text"
             app:boxStrokeWidthFocused="0dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/white"
                 android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -49,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
+            android:backgroundTint="@color/second"
             android:layout_marginTop="6dp"
             android:text="Complete"
             android:textSize="18sp" />

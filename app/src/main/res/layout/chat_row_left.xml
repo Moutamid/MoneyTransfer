@@ -12,13 +12,14 @@
         android:layout_marginEnd="20dp"
         android:minWidth="70dp"
         app:cardCornerRadius="16dp"
-        app:cardBackgroundColor="@color/cha_item_left">
+        app:cardBackgroundColor="@color/text">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/lorem"
             android:padding="12dp"
+            android:textColor="@color/white"
             android:id="@+id/text" />
 
     </androidx.cardview.widget.CardView>
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="02:23 PM"
         android:padding="12dp"
+        android:textColor="@color/text"
         android:id="@+id/date" />
 
 </LinearLayout>

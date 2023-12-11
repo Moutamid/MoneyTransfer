@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/primary"
     tools:context=".activities.SettingsActivity">
 
     <include
@@ -31,12 +31,12 @@
                 android:padding="12dp"
                 android:text="Update Profile"
                 android:gravity="start"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:iconGravity="end"
                 app:icon="@drawable/round_person_4_24"
-                app:iconTint="@color/black"
-                app:backgroundTint="@color/cha_item_left" />
+                app:iconTint="@color/white"
+                app:backgroundTint="@color/second" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/policy"
@@ -46,12 +46,12 @@
                 android:padding="12dp"
                 android:text="Privacy Policy"
                 android:gravity="start"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:iconGravity="end"
                 app:icon="@drawable/round_privacy_tip_24"
-                app:iconTint="@color/black"
-                app:backgroundTint="@color/cha_item_left" />
+                app:iconTint="@color/white"
+                app:backgroundTint="@color/second" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/help"
@@ -61,12 +61,12 @@
                 android:padding="12dp"
                 android:text="Help &amp; Support"
                 android:gravity="start"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:iconGravity="end"
                 app:icon="@drawable/round_support_agent_24"
-                app:iconTint="@color/black"
-                app:backgroundTint="@color/cha_item_left" />
+                app:iconTint="@color/white"
+                app:backgroundTint="@color/second" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/logout"

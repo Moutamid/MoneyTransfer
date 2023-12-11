@@ -5,11 +5,15 @@
     <color name="violet">#7161ef</color>
     <color name="light">#957fef</color>
     <color name="light2">#b79ced</color>
-    <color name="grey">#e9e7e7</color>
+    <color name="grey">#262B3F</color>
+<!--    <color name="grey">#e9e7e7</color>-->
     <color name="text_off">#49454F</color>
     <color name="red">#F44336</color>
     <color name="nav_header">#F7F4FC</color>
     <color name="yellow">#FF9800</color>
     <color name="cha_item">#F3EDFB</color>
-    <color name="cha_item_left">#F7F7F7</color>
+    <color name="primary">#191A2C</color>
+    <color name="second">#262B3F</color>
+    <color name="accent">#F46593</color>
+    <color name="text">#65718B</color>
 </resources>

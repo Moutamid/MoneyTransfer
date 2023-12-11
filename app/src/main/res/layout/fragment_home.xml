@@ -10,14 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/primary"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="@color/primary"
             app:cardCornerRadius="13dp"
             app:cardElevation="0dp">
 
@@ -56,7 +56,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:textColor="@color/text_off"
+                        android:textColor="@color/text"
                         android:textSize="14sp"
                         android:text="Good Morning" />
 
@@ -65,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         tools:text="Suleman Ijaz" />
@@ -77,6 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
+                    app:tint="@color/white"
                     android:src="@drawable/round_settings_24" />
 
             </LinearLayout>
@@ -96,7 +97,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/violet"
+                app:cardBackgroundColor="@color/second"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
@@ -118,7 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Place Bid"
+                        android:text="Place\nBid"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
@@ -133,7 +134,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/grey"
+                app:cardBackgroundColor="@color/second"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
@@ -147,6 +148,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:tint="@color/text"
                         android:layout_marginBottom="10dp"
                         android:src="@drawable/round_money_24" />
 
@@ -154,8 +156,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="View Bids"
-                        android:textColor="@color/black"
+                        android:text="View\nBids"
+                        android:textColor="@color/text"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -169,7 +171,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/grey"
+                app:cardBackgroundColor="@color/second"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
@@ -184,14 +186,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
+                        app:tint="@color/text"
                         android:src="@drawable/round_monetization_on_24" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="My Bids"
-                        android:textColor="@color/black"
+                        android:text="My\nBids"
+                        android:textColor="@color/text"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -205,7 +208,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/grey"
+                app:cardBackgroundColor="@color/second"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
@@ -220,14 +223,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
+                        app:tint="@color/text"
                         android:src="@drawable/round_mark_unread_chat_alt_24" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Chats"
-                        android:textColor="@color/black"
+                        android:text="My\nChats"
+                        android:textColor="@color/text"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -241,7 +245,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:background="@drawable/round_top"
-            android:backgroundTint="@color/cha_item_left"
+            android:backgroundTint="@color/second"
             android:orientation="vertical">
 
             <TextView
@@ -250,7 +254,7 @@
                 android:layout_height="wrap_content"
                 android:padding="12dp"
                 android:text="Currency Rates"
-                android:textColor="@color/black"
+                android:textColor="@color/text"
                 android:textSize="15sp" />
 
 
@@ -268,7 +272,7 @@
                 android:layout_height="wrap_content"
                 android:padding="12dp"
                 android:text="Recent Transactions"
-                android:textColor="@color/text_off"
+                android:textColor="@color/text"
                 android:textSize="13sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -296,7 +300,7 @@
                     android:layout_height="wrap_content"
                     android:padding="12dp"
                     android:text="History is Empty"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text"
                     android:textSize="18sp" />
 
             </LinearLayout>
