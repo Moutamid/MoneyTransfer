@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:text="Select Your Country" />
 
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:text="Bid Place In Country" />
 
@@ -126,26 +126,50 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <RadioGroup
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:paddingVertical="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="Your Preference" />
 
-                <RadioButton
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
                     android:id="@+id/transfer"
+                    style="@style/ChipsColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Transfer By Bank" />
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="Transfer By Bank"
+                    app:chipCornerRadius="12dp"
+                    app:chipStartPadding="12dp"
+                    app:chipEndPadding="12dp"
+                    android:textSize="16sp" />
 
-                <RadioButton
+                <com.google.android.material.chip.Chip
                     android:id="@+id/faceToFace"
+                    style="@style/ChipsColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="Meet Face-to-Face" />
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:checked="false"
+                    app:chipCornerRadius="12dp"
+                    app:chipStartPadding="12dp"
+                    app:chipEndPadding="12dp"
+                    android:text="Meet Face-to-Face"
+                    android:textSize="16sp" />
 
-            </RadioGroup>
+            </com.google.android.material.chip.ChipGroup>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bid"

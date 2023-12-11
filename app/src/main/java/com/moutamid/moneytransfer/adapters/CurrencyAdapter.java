@@ -10,10 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fxn.stash.Stash;
 import com.moutamid.moneytransfer.R;
 import com.moutamid.moneytransfer.models.CurrenciesModel;
+import com.moutamid.moneytransfer.models.UserModel;
+import com.moutamid.moneytransfer.utilis.Constants;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.CurrencyVH> {
 
@@ -34,9 +39,14 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
     @Override
     public void onBindViewHolder(@NonNull CurrencyVH holder, int position) {
         CurrenciesModel amount = list.get(holder.getAbsoluteAdapterPosition());
-        holder.amount.setText(amount.getAmount());
-        holder.countryName.setText(amount.getName() + " Current Rate");
+        holder.amount.setText(amount.getSign() + amount.getAmount());
+        holder.code.setText(amount.getSymbol());
+        holder.countryName.setText(amount.getName());
         holder.flag.setImageResource(amount.getIcon());
+        UserModel userModel = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
+        String calc = "1" + Constants.getCurrencyCode(userModel.getCountry()) + " = " + (1 * Double.parseDouble(amount.getAmount())) + amount.getSign();
+        holder.calculation.setText(calc);
+
     }
 
     @Override
@@ -45,13 +55,15 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
     }
 
     public class CurrencyVH extends RecyclerView.ViewHolder{
-        TextView amount, countryName;
-        ImageView flag;
+        TextView amount, code, countryName, calculation;
+        CircleImageView flag;
         public CurrencyVH(@NonNull View itemView) {
             super(itemView);
             amount = itemView.findViewById(R.id.amount);
+            code = itemView.findViewById(R.id.code);
             countryName = itemView.findViewById(R.id.countryName);
             flag = itemView.findViewById(R.id.flag);
+            calculation = itemView.findViewById(R.id.calculation);
         }
     }
 

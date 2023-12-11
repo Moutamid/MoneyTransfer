@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -33,6 +34,10 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentChatBinding.inflate(getLayoutInflater(), container, false);
+
+        binding.back.setOnClickListener(v -> {
+            getActivity().getSupportFragmentManager().popBackStack("Chat", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        });
 
         binding.chatRC.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.chatRC.setHasFixedSize(false);

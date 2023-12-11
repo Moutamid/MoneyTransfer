@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -38,6 +39,10 @@ public class MyBidsFragment extends Fragment {
         binding = FragmentMyBidsBinding.inflate(getLayoutInflater(), container, false);
 
         list = new ArrayList<>();
+
+        binding.back.setOnClickListener(v -> {
+            getActivity().getSupportFragmentManager().popBackStack("BID", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        });
 
         binding.bidRC.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.bidRC.setHasFixedSize(false);

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="15dp"
-    app:cardBackgroundColor="@color/light2"
+    app:cardBackgroundColor="@color/cha_item"
     app:cardCornerRadius="16dp"
     app:cardElevation="0dp"
     app:strokeWidth="0dp">
@@ -13,40 +13,72 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:padding="15dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/flag"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:civ_border_width="0dp"
+            tools:src="@drawable/eg" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="EGP"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/countryName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Saudia Arabia Current Rate"
-                android:layout_weight="1"
-                android:textColor="@color/white"
+                android:text="United Arab Emirates Dirham"
+                android:textColor="@color/text_off"
                 android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/flag"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                tools:src="@drawable/eg" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/amount"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="EGP 2000.0"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$2000.0"
+                android:textColor="@color/black"
+                android:gravity="end"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/calculation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="1EGP = 100000000SD"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textColor="@color/text_off"
+                android:textSize="14sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

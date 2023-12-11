@@ -52,8 +52,8 @@ public class HomeFragment extends Fragment {
 
         binding.placeBid.setOnClickListener(v -> startActivity(new Intent(requireContext(), PlaceBidActivity.class)));
         binding.othersBid.setOnClickListener(v -> startActivity(new Intent(requireContext(), OthersBidActivity.class)));
-        binding.chats.setOnClickListener(v -> startActivity(new Intent(requireContext(), OthersBidActivity.class)));
-        binding.myBid.setOnClickListener(v -> startActivity(new Intent(requireContext(), OthersBidActivity.class)));
+        binding.chats.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).addToBackStack("Chat").commit());
+        binding.myBid.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyBidsFragment()).addToBackStack("BID").commit());
         binding.setting.setOnClickListener(v -> startActivity(new Intent(requireContext(), SettingsActivity.class)));
 
         list = new ArrayList<>();
@@ -134,57 +134,69 @@ public class HomeFragment extends Fragment {
                 String fieldName = field.getName();
                 String currency = "";
                 String country = "";
+                String sign = "";
                 int icon = 0;
                 Log.d("getRateList", "getRateList: " + fieldName);
                 if (!fieldName.equalsIgnoreCase(name)) {
                     if (fieldName.equalsIgnoreCase("egypt")) {
                         icon = R.drawable.eg;
-                        country = "Egypt";
+                        country = "Egyptian Pound";
+                        sign = "E£";
                         currency = Constants.getCurrencyCode("Egypt");
                     } else if (fieldName.equalsIgnoreCase("italy")){
                         icon = R.drawable.it;
-                        country = "Italy";
+                        country = "Euro";
+                        sign = "€";
                         currency = Constants.getCurrencyCode("Italy");
                     } else if (fieldName.equalsIgnoreCase("morocco")){
                         icon = R.drawable.ma;
-                        country = "Morocco";
+                        country = "Moroccan Dirham";
+                        sign = "MAD";
                         currency = Constants.getCurrencyCode("Morocco");
                     } else if (fieldName.equalsIgnoreCase("oman")){
                         icon = R.drawable.om;
-                        country = "Oman";
+                        country = "Omani Rial";
+                        sign = "OMR";
                         currency = Constants.getCurrencyCode("Oman");
                     } else if (fieldName.equalsIgnoreCase("palestine")){
                         icon = R.drawable.ps;
-                        country = "Palestine";
+                        country = "Israeli New Shekel";
+                        sign = "₪";
                         currency = Constants.getCurrencyCode("Palestine");
                     } else if (fieldName.equalsIgnoreCase("qatar")){
                         icon = R.drawable.qa;
-                        country = "Qatar";
+                        country = "Qatari Riyal";
+                        sign = "QAR";
                         currency = Constants.getCurrencyCode("Qatar");
                     } else if (fieldName.equalsIgnoreCase("russia")){
                         icon = R.drawable.ru;
-                        country = "Russia";
+                        country = "Russian Ruble";
+                        sign = "RUB";
                         currency = Constants.getCurrencyCode("Russia");
                     } else if (fieldName.equalsIgnoreCase("saudi_Arabia")){
                         icon = R.drawable.sa;
-                        country = "Saudi Arabia";
+                        country = "Saudi Riyal";
+                        sign = "SAR";
                         currency = Constants.getCurrencyCode("Saudi Arabia");
                     } else if (fieldName.equalsIgnoreCase("sudan")){
                         icon = R.drawable.sd;
-                        country = "Sudan";
+                        country = "Sudanese Pound";
+                        sign = "SDG";
                         currency = Constants.getCurrencyCode("Sudan");
                     } else if (fieldName.equalsIgnoreCase("syria")){
                         icon = R.drawable.sy;
-                        country = "Syria";
+                        country = "Syrian Pound";
+                        sign = "SYP";
                         currency = Constants.getCurrencyCode("Syria");
                     } else if (fieldName.equalsIgnoreCase("uae")){
                         icon = R.drawable.ae;
-                        country = "United Arab Emirates";
+                        country = "Arab Emirates Dirham";
+                        sign = "AED";
                         currency = Constants.getCurrencyCode("United Arab Emirates");
                     }
                     try {
                         field.setAccessible(true);
-                        ratesList.add(new CurrenciesModel(currency + " " + field.get(rates), country, icon));
+                        ratesList.add(new CurrenciesModel(currency, sign, ""+field.get(rates), country, icon));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } finally {
@@ -200,7 +212,7 @@ public class HomeFragment extends Fragment {
     private void updateUI() {
         binding.wish.setText(getWish());
         binding.tvNavName.setText(userModel.getName());
-        binding.currencyRate.setText("Currency Rate for " + userModel.getCountry());
+        binding.currencyRate.setText("Currency Rates for " + userModel.getCountry());
         Glide.with(HomeFragment.this).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(binding.imgNavLogo);
     }
 

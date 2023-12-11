@@ -65,7 +65,7 @@
                 android:textStyle="bold"
                 tools:text="AE 12.36 = SR 1234" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
