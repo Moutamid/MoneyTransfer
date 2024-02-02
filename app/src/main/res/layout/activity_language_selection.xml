@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context=".activities.LanguageSelectionActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <xyz.teamgravity.imageradiobutton.GravityRadioGroup
+        android:id="@+id/radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/choose"
+        android:layout_margin="12dp"
+        app:grgRadioButtonCheckedId="@id/english"
+        android:orientation="horizontal">
+
+        <xyz.teamgravity.imageradiobutton.GravityImageRadioButton
+            android:id="@+id/english"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_btn_uncheck"
+            android:padding="20dp"
+            app:girbImage="@drawable/gb"
+            app:girbPressedBackgroundDrawable="@drawable/radio_btn_checked"
+            app:girbPressedTextColor="@color/white"
+            app:girbText="English (UK)"
+            app:girbUnpressedTextColor="@color/white" />
+
+        <xyz.teamgravity.imageradiobutton.GravityImageRadioButton
+            android:id="@+id/arabic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_btn_uncheck"
+            android:padding="20dp"
+            app:girbImage="@drawable/sa"
+            app:girbPressedBackgroundDrawable="@drawable/radio_btn_checked"
+            app:girbPressedTextColor="@color/white"
+            app:girbText="Arabic"
+            app:girbUnpressedTextColor="@color/white" />
+
+    </xyz.teamgravity.imageradiobutton.GravityRadioGroup>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/choose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="@string/choose"
+        android:layout_margin="12dp"
+        app:backgroundTint="@color/violet"
+        android:padding="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"
+        android:textSize="18sp" />
+
+</RelativeLayout>

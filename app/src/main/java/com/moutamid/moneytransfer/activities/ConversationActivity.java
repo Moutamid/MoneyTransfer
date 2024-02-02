@@ -48,14 +48,19 @@ public class ConversationActivity extends AppCompatActivity {
     String message = "";
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Constants.initDialog(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityConversationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        Constants.setLocale(getBaseContext(), Stash.getString(Constants.LANGUAGE, "en"));
         chatModel = (ChatModel) Stash.getObject(Constants.CHAT_ITEM, ChatModel.class);
 
-        Constants.initDialog(this);
         list = new ArrayList<>();
 
         binding.ChatRC.setLayoutManager(new LinearLayoutManager(this));
@@ -114,7 +119,7 @@ public class ConversationActivity extends AppCompatActivity {
                     binding.ChatRC.scrollToPosition(list.size() - 1);
                     adapter.notifyItemInserted(list.size() - 1);
                 } else {
-                    Toast.makeText(ConversationActivity.this, "No Chat Available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConversationActivity.this, getResources().getString(R.string.no_chat_available), Toast.LENGTH_SHORT).show();
                 }
 //                        Constants.dismissDialog();
             }
@@ -238,7 +243,7 @@ public class ConversationActivity extends AppCompatActivity {
                 }
                 Constants.databaseReference().child(Constants.USER).child(userModel.getID()).child("rating").updateChildren(map).addOnSuccessListener(unused -> {
                     Constants.dismissDialog();
-                    Toast.makeText(this, "Your rate is counted Thanks for your feedback!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.your_rate_is_counted_thanks_for_your_feedback), Toast.LENGTH_SHORT).show();
                 }).addOnFailureListener(e -> {
                     Constants.dismissDialog();
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -296,7 +301,7 @@ public class ConversationActivity extends AppCompatActivity {
                                         .push().setValue(receiverModel)
                                         .addOnSuccessListener(unused22 -> {
                                             Constants.dismissDialog();
-                                            Toast.makeText(this, "Transaction Completed!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(this, getResources().getString(R.string.transaction_completed), Toast.LENGTH_SHORT).show();
                                         })
                                         .addOnFailureListener(e -> {
                                             Constants.dismissDialog();

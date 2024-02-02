@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Welcome back!"
+                android:text="@string/welcome_back"
                 android:textColor="@color/white"
                 android:textSize="28sp"
                 android:textStyle="bold" />
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Ready to dive into hassle-free transactions?"
+                android:text="@string/ready_to_dive_into_hassle_free_transactions"
                 android:textColor="@color/text"
                 android:textSize="16sp" />
 
@@ -45,7 +45,7 @@
                 style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email"
                 app:boxBackgroundColor="@color/second"
                 android:layout_marginTop="10dp"
                 app:boxCornerRadiusBottomEnd="12dp"
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Password"
+                android:hint="@string/password"
                 app:boxBackgroundColor="@color/second"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
@@ -99,7 +99,7 @@
                 android:padding="12dp"
                 android:layout_gravity="end"
                 app:rippleColor="@color/light"
-                android:text="Forgot Password?"
+                android:text="@string/forgot_password"
                 android:textColor="@color/red"
                 android:layout_marginTop="6dp"
                 app:backgroundTint="@color/primary"
@@ -112,7 +112,7 @@
                 android:layout_marginTop="12dp"
                 android:padding="12dp"
                 app:backgroundTint="@color/light"
-                android:text="Login"
+                android:text="@string/login"
                 android:textSize="16sp"
                 app:cornerRadius="12dp" />
 

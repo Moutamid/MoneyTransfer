@@ -33,10 +33,10 @@ public class OthersBidActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityOthersBidBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Constants.setLocale(getBaseContext(), Stash.getString(Constants.LANGUAGE, "en"));
 
-        binding.toolbar.title.setText("Find Your Bid");
+        binding.toolbar.title.setText(getString(R.string.find_your_bid));
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
-        Constants.initDialog(this);
 
         binding.bidRC.setLayoutManager(new LinearLayoutManager(this));
         binding.bidRC.setHasFixedSize(false);
@@ -50,6 +50,7 @@ public class OthersBidActivity extends AppCompatActivity {
             showPopupMenu(v);
         });
 
+/*
         binding.search.setOnClickListener(v -> {
             if (binding.max.getEditText().getText().toString().isEmpty() && binding.min.getEditText().getText().toString().isEmpty()) {
                 getAll();
@@ -94,7 +95,14 @@ public class OthersBidActivity extends AppCompatActivity {
                 }
             }
         });
+*/
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Constants.initDialog(this);
     }
 
     private void showPopupMenu(View v) {

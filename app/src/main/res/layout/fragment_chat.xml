@@ -41,7 +41,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Stay in-Touch"
+            android:text="@string/stay_in_touch"
             android:padding="12dp"
             android:textColor="@color/white"
             android:textSize="28sp"

@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.view.Window;
@@ -31,9 +32,10 @@ import java.util.Locale;
 public class Constants {
 
     static Dialog dialog;
-    public static final String DATEFORMATE = "dd/MM/yyyy";
+    public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String USER = "USERS";
     public static final String BIDS = "BIDS";
+    public static final String LANGUAGE = "LANGUAGE";
     public static final String CHAT_ITEM = "CHAT_ITEM";
     public static final String TRANSACTIONS = "TRANSACTIONS";
     public static final String ONGOING_BIDS = "ONGOING_BIDS";
@@ -129,7 +131,7 @@ public class Constants {
     }
 
     public static String getFormattedDate(long date){
-        return new SimpleDateFormat(DATEFORMATE, Locale.getDefault()).format(date);
+        return new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(date);
     }
 
     public static void initDialog(Context context){
@@ -146,6 +148,14 @@ public class Constants {
 
     public static void dismissDialog(){
         dialog.dismiss();
+    }
+
+    public static void setLocale(Context context, String lng) {
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        context.getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
     }
 
     public static void checkApp(Activity activity) {

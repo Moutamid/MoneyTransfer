@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:text="Select Your Country"
+                android:text="@string/select_your_country"
                 android:textColor="@color/text"
                 android:textSize="16sp" />
 
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
-                android:text="Bid Place In Country"
+                android:text="@string/bid_place_in_country"
                 android:textColor="@color/text"
                 android:textSize="16sp" />
 
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Your Amount"
+                android:hint="@string/your_amount"
                 android:textColorHint="@color/text"
                 app:boxBackgroundColor="@color/grey"
                 app:boxCornerRadiusBottomEnd="12dp"
@@ -90,8 +90,8 @@
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                app:helperText="Amount in your currency"
-                app:helperTextTextColor="@color/text"
+                app:helperText="@string/amount_in_your_currency"
+                app:helperTextTextColor="@color/accent"
                 app:hintTextColor="@color/text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -109,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Amount"
+                android:hint="@string/bid_amount"
                 android:textColorHint="@color/text"
                 app:boxBackgroundColor="@color/grey"
                 app:boxCornerRadiusBottomEnd="12dp"
@@ -118,8 +118,8 @@
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                app:helperText="Amount in Bid Currency"
-                app:helperTextTextColor="@color/text"
+                app:helperText="@string/amount_in_bid_currency"
+                app:helperTextTextColor="@color/accent"
                 app:hintTextColor="@color/text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:paddingVertical="10dp"
-                android:text="Your Preference"
+                android:text="@string/your_preference"
                 android:textColor="@color/text"
                 android:textSize="16sp" />
 
@@ -157,7 +157,7 @@
                     android:checkable="true"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="Transfer By Bank"
+                    android:text="@string/transfer_by_bank"
                     android:textSize="16sp"
                     app:chipCornerRadius="12dp"
                     app:chipEndPadding="12dp"
@@ -172,7 +172,7 @@
                     android:checked="false"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="Meet Face-to-Face"
+                    android:text="@string/meet_face_to_face"
                     android:textSize="16sp"
                     app:chipCornerRadius="12dp"
                     app:chipEndPadding="12dp"
@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:padding="12dp"
-                android:text="Place Bid"
+                android:text="@string/place_bid"
                 android:textSize="16sp"
                 android:backgroundTint="@color/light"
                 app:cornerRadius="12dp" />

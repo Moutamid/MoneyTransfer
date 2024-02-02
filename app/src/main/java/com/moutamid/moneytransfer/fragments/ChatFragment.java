@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.fxn.stash.Stash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -49,6 +50,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Constants.setLocale(requireContext(), Stash.getString(Constants.LANGUAGE, "en"));
         Constants.initDialog(requireContext());
         getChats();
     }

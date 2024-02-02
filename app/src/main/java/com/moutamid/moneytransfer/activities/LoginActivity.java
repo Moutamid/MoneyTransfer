@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Toast;
 
+import com.fxn.stash.Stash;
+import com.moutamid.moneytransfer.R;
 import com.moutamid.moneytransfer.utilis.Constants;
 import com.moutamid.moneytransfer.MainActivity;
 import com.moutamid.moneytransfer.databinding.ActivityLoginBinding;
@@ -20,10 +22,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Constants.setLocale(getBaseContext(), Stash.getString(Constants.LANGUAGE, "en"));
 
-        Constants.initDialog(this);
-
-        binding.toolbar.title.setText("Login");
+        binding.toolbar.title.setText(getString(R.string.login));
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
 
         binding.forgot.setOnClickListener(v -> startActivity(new Intent(this, ForgotActivity.class)));
@@ -48,17 +49,23 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Constants.initDialog(this);
+    }
+
     private boolean valid() {
         if (binding.email.getEditText().getText().toString().isEmpty()) {
-            Toast.makeText(this, "Email is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.email_is_empty), Toast.LENGTH_SHORT).show();
             return false;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.getEditText().getText().toString()).matches()) {
-            Toast.makeText(this, "Email is not valid", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.email_is_not_valid), Toast.LENGTH_SHORT).show();
             return false;
         }
         if (binding.password.getEditText().getText().toString().isEmpty()) {
-            Toast.makeText(this, "Password is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.password_is_empty), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

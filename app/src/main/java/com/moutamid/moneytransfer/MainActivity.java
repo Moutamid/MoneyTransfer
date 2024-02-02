@@ -40,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Constants.checkApp(this);
-        Constants.initDialog(this);
-
+        Constants.setLocale(getBaseContext(), Stash.getString(Constants.LANGUAGE, "en"));
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
 
     }

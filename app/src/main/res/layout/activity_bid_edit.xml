@@ -29,7 +29,7 @@
                 android:paddingVertical="10dp"
                 android:textSize="16sp"
                 android:textColor="@color/text"
-                android:text="Select Your Country" />
+                android:text="@string/select_your_country" />
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/country"
@@ -54,7 +54,7 @@
                 android:paddingVertical="10dp"
                 android:textSize="16sp"
                 android:textColor="@color/text"
-                android:text="Bid Place In Country" />
+                android:text="@string/bid_place_in_country" />
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/countryTo"
@@ -86,12 +86,12 @@
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxBackgroundColor="@color/second"
-                app:helperText="Amount in your currency"
+                app:helperText="@string/amount_in_your_currency"
                 app:helperTextTextColor="@color/text"
                 app:hintTextColor="@color/text"
                 android:textColorHint="@color/text"
                 style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:hint="Your Amount">
+                android:hint="@string/your_amount">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -115,11 +115,11 @@
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxBackgroundColor="@color/second"
                 app:helperTextTextColor="@color/text"
-                app:helperText="Amount in Bid Currency"
+                app:helperText="@string/amount_in_bid_currency"
                 app:hintTextColor="@color/text"
                 android:textColorHint="@color/text"
                 style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:hint="Amount">
+                android:hint="@string/amount">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -141,7 +141,7 @@
                 android:layout_marginTop="10dp"
                 android:textSize="16sp"
                 android:textColor="@color/text"
-                android:text="Your Preference" />
+                android:text="@string/your_preference" />
 
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
@@ -156,7 +156,7 @@
                     android:checkable="true"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="Transfer By Bank"
+                    android:text="@string/transfer_by_bank"
                     app:chipCornerRadius="12dp"
                     app:chipStartPadding="12dp"
                     app:chipEndPadding="12dp"
@@ -174,7 +174,7 @@
                     app:chipCornerRadius="12dp"
                     app:chipStartPadding="12dp"
                     app:chipEndPadding="12dp"
-                    android:text="Meet Face-to-Face"
+                    android:text="@string/meet_face_to_face"
                     android:textSize="16sp" />
 
             </com.google.android.material.chip.ChipGroup>
@@ -188,7 +188,7 @@
                 app:backgroundTint="@color/light"
                 android:textSize="16sp"
                 android:layout_marginTop="12dp"
-                android:text="Update Bid" />
+                android:text="@string/update_bid" />
 
         </LinearLayout>
 

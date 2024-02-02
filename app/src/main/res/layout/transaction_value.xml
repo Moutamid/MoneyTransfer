@@ -14,21 +14,20 @@
         android:orientation="vertical"
         android:padding="26dp">
 
-
     <TextView
         android:id="@+id/tv_nav_yourEmail"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:textColor="@color/text"
         android:textSize="16sp"
-        android:text="Enter amount of the contract" />
+        android:text="@string/enter_amount_of_the_contract" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/amount"
             style="@style/Widget.Material3.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Amount"
+            android:hint="@string/amount"
             app:boxBackgroundColor="@color/second"
             android:layout_marginTop="10dp"
             app:boxCornerRadiusBottomEnd="12dp"
@@ -55,7 +54,7 @@
             android:padding="12dp"
             android:backgroundTint="@color/second"
             android:layout_marginTop="6dp"
-            android:text="Complete"
+            android:text="@string/complete"
             android:textSize="18sp" />
 
     </LinearLayout>

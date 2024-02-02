@@ -21,7 +21,7 @@
             android:layout_height="24dp"
             android:textSize="16sp"
             android:textColor="@color/text"
-            android:text="Rate your experience with this user" />
+            android:text="@string/rate_your_experience_with_this_user" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:padding="12dp"
             android:layout_marginTop="6dp"
-            android:text="Rate"
+            android:text="@string/rate"
             android:textSize="18sp" />
 
     </LinearLayout>

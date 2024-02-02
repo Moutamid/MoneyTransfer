@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="350dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="15dp"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:padding="15dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
+            android:visibility="gone"
             android:layout_marginHorizontal="10dp"
             android:orientation="vertical">
 
@@ -52,10 +53,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_weight="1"
+            android:layout_marginStart="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -72,7 +73,7 @@
                 android:id="@+id/calculation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="1EGP = 100000000SD"
+                tools:text="1EGP = 100SD"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/text_off"

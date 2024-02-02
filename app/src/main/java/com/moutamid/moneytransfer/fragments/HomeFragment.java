@@ -2,23 +2,22 @@ package com.moutamid.moneytransfer.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.fxn.stash.Stash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.moutamid.moneytransfer.MainActivity;
 import com.moutamid.moneytransfer.R;
 import com.moutamid.moneytransfer.activities.OthersBidActivity;
 import com.moutamid.moneytransfer.activities.PlaceBidActivity;
@@ -28,7 +27,6 @@ import com.moutamid.moneytransfer.adapters.TransactionAdapter;
 import com.moutamid.moneytransfer.databinding.FragmentHomeBinding;
 import com.moutamid.moneytransfer.models.CountriesRates;
 import com.moutamid.moneytransfer.models.CurrenciesModel;
-import com.moutamid.moneytransfer.models.Rating;
 import com.moutamid.moneytransfer.models.TransactionModel;
 import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
@@ -41,6 +39,7 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     UserModel userModel;
     ArrayList<TransactionModel> list;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -61,13 +60,24 @@ public class HomeFragment extends Fragment {
         binding.transactionRC.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.transactionRC.setHasFixedSize(false);
 
+//        PagerSnapHelper snapHelper = new PagerSnapHelper();
+//        snapHelper.attachToRecyclerView(binding.currencyRC);
+
+/*        binding.currencyRC.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                recyclerView.scrollBy((int) (dx * 1f), 0);
+            }
+        });*/
+
         Constants.databaseReference().child(Constants.TRANSACTIONS).child(Constants.auth().getCurrentUser().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
+                        if (snapshot.exists()) {
                             list.clear();
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 TransactionModel model = dataSnapshot.getValue(TransactionModel.class);
                                 list.add(model);
                             }
@@ -97,6 +107,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Constants.setLocale(requireContext(), Stash.getString(Constants.LANGUAGE, "en"));
         Constants.initDialog(requireContext());
         Constants.showDialog();
         Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())
@@ -109,8 +120,7 @@ public class HomeFragment extends Fragment {
                         CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
                         Stash.put(Constants.Values, countriesRates);
                         updateRecyler();
-                    }).addOnFailureListener(e -> e.printStackTrace());
-
+                    }).addOnFailureListener(Throwable::printStackTrace);
                 }).addOnFailureListener(e -> {
                     e.printStackTrace();
                     Constants.dismissDialog();
@@ -119,7 +129,7 @@ public class HomeFragment extends Fragment {
 
     private void updateRecyler() {
         CountriesRates countriesRates = (CountriesRates) Stash.getObject(Constants.Values, CountriesRates.class);
-        String name =  countriesRates.getName().equals("United_Arab_Emirates") ? "uae" : countriesRates.getName();
+        String name = countriesRates.getName().equals("United_Arab_Emirates") ? "uae" : countriesRates.getName();
         ArrayList<CurrenciesModel> rateList = getRateList(name, countriesRates.getRates());
         CurrencyAdapter adapter = new CurrencyAdapter(requireContext(), rateList);
         binding.currencyRC.setHasFixedSize(false);
@@ -143,52 +153,52 @@ public class HomeFragment extends Fragment {
                         country = "Egyptian Pound";
                         sign = "E£";
                         currency = Constants.getCurrencyCode("Egypt");
-                    } else if (fieldName.equalsIgnoreCase("italy")){
+                    } else if (fieldName.equalsIgnoreCase("italy")) {
                         icon = R.drawable.it;
                         country = "Euro";
                         sign = "€";
                         currency = Constants.getCurrencyCode("Italy");
-                    } else if (fieldName.equalsIgnoreCase("morocco")){
+                    } else if (fieldName.equalsIgnoreCase("morocco")) {
                         icon = R.drawable.ma;
                         country = "Moroccan Dirham";
                         sign = "MAD";
                         currency = Constants.getCurrencyCode("Morocco");
-                    } else if (fieldName.equalsIgnoreCase("oman")){
+                    } else if (fieldName.equalsIgnoreCase("oman")) {
                         icon = R.drawable.om;
                         country = "Omani Rial";
                         sign = "OMR";
                         currency = Constants.getCurrencyCode("Oman");
-                    } else if (fieldName.equalsIgnoreCase("palestine")){
+                    } else if (fieldName.equalsIgnoreCase("palestine")) {
                         icon = R.drawable.ps;
                         country = "Israeli New Shekel";
                         sign = "₪";
                         currency = Constants.getCurrencyCode("Palestine");
-                    } else if (fieldName.equalsIgnoreCase("qatar")){
+                    } else if (fieldName.equalsIgnoreCase("qatar")) {
                         icon = R.drawable.qa;
                         country = "Qatari Riyal";
                         sign = "QAR";
                         currency = Constants.getCurrencyCode("Qatar");
-                    } else if (fieldName.equalsIgnoreCase("russia")){
+                    } else if (fieldName.equalsIgnoreCase("russia")) {
                         icon = R.drawable.ru;
                         country = "Russian Ruble";
                         sign = "RUB";
                         currency = Constants.getCurrencyCode("Russia");
-                    } else if (fieldName.equalsIgnoreCase("saudi_Arabia")){
+                    } else if (fieldName.equalsIgnoreCase("saudi_Arabia")) {
                         icon = R.drawable.sa;
                         country = "Saudi Riyal";
                         sign = "SAR";
                         currency = Constants.getCurrencyCode("Saudi Arabia");
-                    } else if (fieldName.equalsIgnoreCase("sudan")){
+                    } else if (fieldName.equalsIgnoreCase("sudan")) {
                         icon = R.drawable.sd;
                         country = "Sudanese Pound";
                         sign = "SDG";
                         currency = Constants.getCurrencyCode("Sudan");
-                    } else if (fieldName.equalsIgnoreCase("syria")){
+                    } else if (fieldName.equalsIgnoreCase("syria")) {
                         icon = R.drawable.sy;
                         country = "Syrian Pound";
                         sign = "SYP";
                         currency = Constants.getCurrencyCode("Syria");
-                    } else if (fieldName.equalsIgnoreCase("uae")){
+                    } else if (fieldName.equalsIgnoreCase("uae")) {
                         icon = R.drawable.ae;
                         country = "Arab Emirates Dirham";
                         sign = "AED";
@@ -196,7 +206,7 @@ public class HomeFragment extends Fragment {
                     }
                     try {
                         field.setAccessible(true);
-                        ratesList.add(new CurrenciesModel(currency, sign, ""+field.get(rates), country, icon));
+                        ratesList.add(new CurrenciesModel(currency, sign, "" + field.get(rates), country, icon));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } finally {
@@ -212,22 +222,21 @@ public class HomeFragment extends Fragment {
     private void updateUI() {
         binding.wish.setText(getWish());
         binding.tvNavName.setText(userModel.getName());
-        binding.currencyRate.setText("Currency Rates for " + userModel.getCountry());
+        binding.currencyRate.setText(getString(R.string.currency_rates_for) + " " + userModel.getCountry());
         Glide.with(HomeFragment.this).load(userModel.getImage()).placeholder(R.drawable.profile_icon).into(binding.imgNavLogo);
     }
 
     private String getWish() {
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-
-        if(timeOfDay < 12){
-            return  "Good Morning";
-        }else if(timeOfDay < 16){
-            return "Good Afternoon";
-        }else if(timeOfDay < 21){
-            return "Good Evening";
-        }else {
-            return "Good Night";
+        if (timeOfDay < 12) {
+            return getString(R.string.good_morning);
+        } else if (timeOfDay < 16) {
+            return getString(R.string.good_afternoon);
+        } else if (timeOfDay < 21) {
+            return getString(R.string.good_evening);
+        } else {
+            return getString(R.string.good_night);
         }
     }
 }

@@ -22,10 +22,11 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 app:cardCornerRadius="12dp"
+                app:strokeWidth="0dp"
                 app:cardElevation="0dp">
 
                 <ImageView
@@ -35,7 +36,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/profile_icon" />
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/text"
-                    tools:text="Sending Money to Home" />
+                    tools:text="@string/sending_money_to_home" />
 
                 <TextView
                     android:id="@+id/money"

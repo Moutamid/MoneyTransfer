@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:background="@drawable/text_bg"
             android:fontFamily="@font/poppins"
-            android:hint="Message..."
+            android:hint="@string/message"
             android:maxHeight="150dp"
             android:inputType="textMultiLine"
             android:textColor="@color/white"
@@ -56,7 +56,7 @@
                 android:layout_height="24dp"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
-                app:tint="@color/black"
+                app:tint="@color/white"
                 android:src="@drawable/paper_plane_solid" />
 
         </com.google.android.material.card.MaterialCardView>

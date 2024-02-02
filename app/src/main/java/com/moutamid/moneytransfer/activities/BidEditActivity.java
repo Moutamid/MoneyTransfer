@@ -26,38 +26,44 @@ public class BidEditActivity extends AppCompatActivity {
     ActivityBidEditBinding binding;
     String ID;
     BidModel bidModel;
+    String prefixTextPrice = "";
+    String prefixTextBid = "";
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Constants.initDialog(this);
+        getData();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityBidEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        Constants.setLocale(getBaseContext(), Stash.getString(Constants.LANGUAGE, "en"));
         ID = getIntent().getStringExtra("ID");
-        Constants.initDialog(this);
 
-        binding.toolbar.title.setText("Edit Your Bid");
+        binding.toolbar.title.setText(getString(R.string.edit_your_bid));
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
         binding.toolbar.popup.setVisibility(View.VISIBLE);
         binding.toolbar.secondIcon.setImageResource(R.drawable.round_delete_24);
 
         binding.toolbar.popup.setOnClickListener(v -> {
-            new MaterialAlertDialogBuilder(this).setTitle("Delete Bid").setMessage("Do you really want to delete this bid?")
-                    .setPositiveButton("Yes", ((dialog, which) -> {
+            new MaterialAlertDialogBuilder(this).setTitle(getString(R.string.delete_bid)).setMessage(getString(R.string.do_you_really_want_to_delete_this_bid))
+                    .setPositiveButton(getString(R.string.yes), ((dialog, which) -> {
                         dialog.dismiss();
                         deleteBid();
-                    })).setNegativeButton("No", ((dialog, which) -> dialog.dismiss()))
+                    })).setNegativeButton(getString(R.string.no), ((dialog, which) -> dialog.dismiss()))
                     .show();
         });
 
         binding.country.setCustomMasterCountries(Constants.CountriesCodes);
         binding.countryTo.setCustomMasterCountries(Constants.CountriesCodes);
 
-        getData();
-
         binding.bid.setOnClickListener(v -> {
             if (binding.price.getEditText().getText().toString().isEmpty()) {
-                Toast.makeText(this, "Enter price in your currency", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.enter_price_in_your_currency), Toast.LENGTH_SHORT).show();
             } else {
                 Constants.showDialog();
                 Constants.databaseReference().child(Constants.Values).child(getCountry()).get().addOnSuccessListener(dataSnapshot1 -> {
@@ -84,9 +90,18 @@ public class BidEditActivity extends AppCompatActivity {
         });
 
         binding.countryTo.setOnCountryChangeListener(() -> {
+            prefixTextBid = getCurrencyCodes(false);
             double pr = Double.parseDouble(binding.price.getEditText().getText().toString()) * getCurrency();
             binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
+            binding.bidAmount.setHelperText(getString(R.string.amount_in) + " " + prefixTextBid);
         });
+
+        binding.country.setOnCountryChangeListener(() -> {
+            prefixTextPrice = getCurrencyCodes(true);
+            binding.bidAmount.setHelperText(getString(R.string.amount_in) + " " + prefixTextPrice);
+        });
+
+
 
         binding.price.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -130,6 +145,12 @@ public class BidEditActivity extends AppCompatActivity {
                 binding.bidAmount.getEditText().setText(bidModel.getPrice_ioc() + "");
                 binding.price.getEditText().setText(bidModel.getPrice() + "");
 
+                prefixTextBid = getCurrencyCodes(false);
+                binding.bidAmount.setHelperText(getString(R.string.amount_in) + " " + prefixTextBid);
+
+                prefixTextPrice = getCurrencyCodes(true);
+                binding.price.setHelperText(getString(R.string.amount_in) + " " + prefixTextPrice);
+
             }
             Constants.dismissDialog();
         }).addOnFailureListener(e -> {
@@ -146,7 +167,7 @@ public class BidEditActivity extends AppCompatActivity {
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }).addOnSuccessListener(unused -> {
                     Constants.dismissDialog();
-                    Toast.makeText(this, "Bid Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.bid_deleted), Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 });
     }
@@ -162,7 +183,7 @@ public class BidEditActivity extends AppCompatActivity {
         Constants.databaseReference().child(Constants.BIDS).child(bidModel.getID())
                 .setValue(bidModel).addOnSuccessListener(unused -> {
                     Constants.dismissDialog();
-                    Toast.makeText(this, "Your Bid is Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.your_bid_is_updated), Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }).addOnFailureListener(e -> {
                     Constants.dismissDialog();
@@ -201,12 +222,43 @@ public class BidEditActivity extends AppCompatActivity {
         return 0;
     }
 
+    private String getCurrencyCodes(boolean isPrice) {
+        String con = isPrice ? getCountry() : getCountryTO();
+        switch (con) {
+            case Constants.EGYPT:
+                return Constants.Egypt;
+            case Constants.ITALY:
+                return Constants.Italy;
+            case Constants.United_Arab_Emirates:
+                return Constants.UAE;
+            case Constants.SAUDI_ARABIA:
+                return Constants.Saudi_Arabia;
+            case Constants.QATAR:
+                return Constants.Qatar;
+            case Constants.MOROCCO:
+                return Constants.Morocco;
+            case Constants.SUDAN:
+                return Constants.Sudan;
+            case Constants.OMAN:
+                return Constants.Oman;
+            case Constants.RUSSIA:
+                return Constants.Russia;
+            case Constants.SYRIA:
+                return Constants.Syria;
+            case Constants.PALESTINE:
+                return Constants.Palestine;
+            default:
+                return "";
+        }
+    }
+
+
     private String getCountryTO() {
-        return binding.countryTo.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United Arab Emirates" : binding.countryTo.getSelectedCountryEnglishName();
+        return binding.countryTo.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United_Arab_Emirates" : binding.countryTo.getSelectedCountryEnglishName();
     }
 
     private String getCountry() {
-        return binding.country.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United Arab Emirates" : binding.country.getSelectedCountryEnglishName();
+        return binding.country.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United_Arab_Emirates" : binding.country.getSelectedCountryEnglishName();
     }
 
 

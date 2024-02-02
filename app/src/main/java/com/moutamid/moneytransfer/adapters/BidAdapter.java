@@ -22,7 +22,6 @@ import com.fxn.stash.Stash;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
 import com.moutamid.moneytransfer.R;
-import com.moutamid.moneytransfer.activities.AcceptBidsActivity;
 import com.moutamid.moneytransfer.activities.ConversationActivity;
 import com.moutamid.moneytransfer.models.BidModel;
 import com.moutamid.moneytransfer.models.ChatModel;
@@ -110,7 +109,7 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
                                 }
                             }
                         } else {
-                            Toast.makeText(context, "Chat not available yet", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, context.getResources().getString(R.string.chat_not_available_yet), Toast.LENGTH_SHORT).show();
                         }
                         Constants.dismissDialog();
                     }).addOnFailureListener(e -> {
@@ -124,12 +123,12 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
             String ID = UUID.randomUUID().toString();
             ChatModel chatModel = new ChatModel(
                     ID, model.getUserID(),
-                    model.getUserImage(), model.getUsername(), "Start Conversation"
+                    model.getUserImage(), model.getUsername(), context.getResources().getString(R.string.start_conversation)
             );
             UserModel stash = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
             ChatModel other = new ChatModel(
                     ID, stash.getID(),
-                    stash.getImage(), stash.getName(), "Start Conversation"
+                    stash.getImage(), stash.getName(), context.getResources().getString(R.string.start_conversation)
             );
             Constants.databaseReference().child(Constants.CHATS).child(Constants.auth().getCurrentUser().getUid()).child(chatModel.getID())
                     .setValue(chatModel).addOnFailureListener(e -> {
@@ -142,7 +141,7 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
                                     Constants.dismissDialog();
                                 }).addOnSuccessListener(unused1 -> {
                                     Constants.dismissDialog();
-                                    Toast.makeText(context, "You can now start conversation with this user", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, context.getResources().getString(R.string.you_can_now_start_conversation_with_this_user), Toast.LENGTH_SHORT).show();
                                 });
                     });
         });

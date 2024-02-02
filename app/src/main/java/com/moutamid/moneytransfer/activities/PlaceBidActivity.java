@@ -2,14 +2,17 @@ package com.moutamid.moneytransfer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
 import com.fxn.stash.Stash;
 import com.hbb20.CountryCodePicker;
+import com.moutamid.moneytransfer.R;
 import com.moutamid.moneytransfer.databinding.ActivityPlaceBidBinding;
 import com.moutamid.moneytransfer.models.BidModel;
 import com.moutamid.moneytransfer.models.CountriesRates;
@@ -24,16 +27,24 @@ import java.util.UUID;
 public class PlaceBidActivity extends AppCompatActivity {
     ActivityPlaceBidBinding binding;
     UserModel stashUSer;
+    String prefixTextPrice = "";
+    String prefixTextBid = "";
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Constants.initDialog(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPlaceBidBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        binding.toolbar.title.setText("Place Your Bid");
+        Constants.setLocale(getBaseContext(), Stash.getString(Constants.LANGUAGE, "en"));
+        binding.toolbar.title.setText(getString(R.string.place_your_bid));
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
-        Constants.initDialog(this);
+
         stashUSer = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
 
         binding.country.setCustomMasterCountries(Constants.CountriesCodes);
@@ -41,7 +52,7 @@ public class PlaceBidActivity extends AppCompatActivity {
         binding.country.setCountryForNameCode(stashUSer.getCountryCode());
         binding.bid.setOnClickListener(v -> {
             if (binding.price.getEditText().getText().toString().isEmpty()) {
-                Toast.makeText(this, "Enter price in your currency", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.enter_price_in_your_currency), Toast.LENGTH_SHORT).show();
             } else {
                 Constants.showDialog();
                 Constants.databaseReference().child(Constants.Values).child(getCountry()).get().addOnSuccessListener(dataSnapshot1 -> {
@@ -67,9 +78,22 @@ public class PlaceBidActivity extends AppCompatActivity {
             });
         });
 
+        prefixTextBid = getCurrencyCodes(false);
+        binding.bidAmount.setHelperText(getString(R.string.amount_in) + " " + prefixTextBid);
+
+        prefixTextPrice = getCurrencyCodes(true);
+        binding.price.setHelperText(getString(R.string.amount_in) + " " + prefixTextPrice);
+
         binding.countryTo.setOnCountryChangeListener(() -> {
+            prefixTextBid = getCurrencyCodes(false);
             double pr = Double.parseDouble(binding.price.getEditText().getText().toString()) * getCurrency();
             binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
+            binding.bidAmount.setHelperText(getString(R.string.amount_in) + " " + prefixTextBid);
+        });
+
+        binding.country.setOnCountryChangeListener(() -> {
+            prefixTextPrice = getCurrencyCodes(true);
+            binding.price.setHelperText(getString(R.string.amount_in) + " " + prefixTextPrice);
         });
 
         binding.price.getEditText().addTextChangedListener(new TextWatcher() {
@@ -78,12 +102,15 @@ public class PlaceBidActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("DefaultLocale")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
                     if (!s.toString().isEmpty()) {
                         double pr = Double.parseDouble(s.toString()) * getCurrency();
                         binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
+                    } else {
+                        binding.price.getEditText().setText(String.format("%.2f", 0f));
                     }
                 } catch (IllegalFormatPrecisionException e ){
                     e.printStackTrace();
@@ -108,7 +135,7 @@ public class PlaceBidActivity extends AppCompatActivity {
         Constants.databaseReference().child(Constants.BIDS).child(bidModel.getID())
                 .setValue(bidModel).addOnSuccessListener(unused -> {
                     Constants.dismissDialog();
-                    Toast.makeText(this, "Your Bid is Placed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.your_bid_is_placed), Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }).addOnFailureListener(e -> {
                     Constants.dismissDialog();
@@ -153,12 +180,42 @@ public class PlaceBidActivity extends AppCompatActivity {
         return 0;
     }
 
+    private String getCurrencyCodes(boolean isPrice) {
+        String con = isPrice ? getCountry() : getCountryTO();
+        switch (con) {
+            case Constants.EGYPT:
+                return Constants.Egypt;
+            case Constants.ITALY:
+                return Constants.Italy;
+            case Constants.United_Arab_Emirates:
+                return Constants.UAE;
+            case Constants.SAUDI_ARABIA:
+                return Constants.Saudi_Arabia;
+            case Constants.QATAR:
+                return Constants.Qatar;
+            case Constants.MOROCCO:
+                return Constants.Morocco;
+            case Constants.SUDAN:
+                return Constants.Sudan;
+            case Constants.OMAN:
+                return Constants.Oman;
+            case Constants.RUSSIA:
+                return Constants.Russia;
+            case Constants.SYRIA:
+                return Constants.Syria;
+            case Constants.PALESTINE:
+                return Constants.Palestine;
+            default:
+                return "";
+        }
+    }
+
     private String getCountryTO() {
-        return binding.countryTo.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United Arab Emirates" : binding.countryTo.getSelectedCountryEnglishName();
+        return binding.countryTo.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United_Arab_Emirates" : binding.countryTo.getSelectedCountryEnglishName();
     }
 
     private String getCountry() {
-        return binding.country.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United Arab Emirates" : binding.country.getSelectedCountryEnglishName();
+        return binding.country.getSelectedCountryEnglishName().equals("United Arab Emirates (UAE)") ? "United_Arab_Emirates" : binding.country.getSelectedCountryEnglishName();
     }
 
 }

@@ -2,6 +2,7 @@ package com.moutamid.moneytransfer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.provider.MediaStore;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.fxn.stash.Stash;
 import com.moutamid.moneytransfer.MainActivity;
 import com.moutamid.moneytransfer.R;
 import com.moutamid.moneytransfer.databinding.ActivityEditProfileBinding;
@@ -24,14 +26,21 @@ public class EditProfileActivity extends AppCompatActivity {
     UserModel userModel;
     Uri imageURi;
     private static final int PICK_IMAGE_REQUEST = 1;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Constants.initDialog(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.toolbar.title.setText("Edit Profile");
+        Constants.setLocale(getBaseContext(), Stash.getString(Constants.LANGUAGE, "en"));
+        binding.toolbar.title.setText(getResources().getString(R.string.edit_profile));
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
-        Constants.initDialog(this);
 
         binding.country.setCustomMasterCountries(Constants.CountriesCodes);
         binding.countryCodePick.setCustomMasterCountries(Constants.CountriesCodes);
@@ -106,7 +115,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 .setValue(model)
                 .addOnSuccessListener(unused -> {
                     Constants.dismissDialog();
-                    Toast.makeText(this, "Profile updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.profile_updated), Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }).addOnFailureListener(e -> {
                     Constants.dismissDialog();
@@ -125,7 +134,7 @@ public class EditProfileActivity extends AppCompatActivity {
             imageURi = data.getData();
             Glide.with(EditProfileActivity.this).load(imageURi).placeholder(R.drawable.profile_icon).into(binding.imgNavLogo);
         } else {
-            Toast.makeText(this, "Failed to get the image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.failed_to_get_the_image), Toast.LENGTH_SHORT).show();
         }
     }
 
