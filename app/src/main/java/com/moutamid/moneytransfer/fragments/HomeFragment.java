@@ -1,9 +1,12 @@
 package com.moutamid.moneytransfer.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -11,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fxn.stash.Stash;
@@ -126,14 +128,80 @@ public class HomeFragment extends Fragment {
                     Constants.dismissDialog();
                 });
     }
+    LinearLayoutManager layoutManager;
 
+    @SuppressLint("ClickableViewAccessibility")
     private void updateRecyler() {
         CountriesRates countriesRates = (CountriesRates) Stash.getObject(Constants.Values, CountriesRates.class);
         String name = countriesRates.getName().equals("United_Arab_Emirates") ? "uae" : countriesRates.getName();
         ArrayList<CurrenciesModel> rateList = getRateList(name, countriesRates.getRates());
+        Log.d("getRateList", "updateRecyler: " + rateList.size());
         CurrencyAdapter adapter = new CurrencyAdapter(requireContext(), rateList);
+        layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.currencyRC.setLayoutManager(layoutManager);
         binding.currencyRC.setHasFixedSize(false);
         binding.currencyRC.setAdapter(adapter);
+
+        startAutoScroll();
+
+        binding.currencyRC.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {// User started touching, stop auto-scrolling
+                    isScrolling = true;
+                    handler.removeCallbacksAndMessages(null);
+                } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {// User released touch, resume auto-scrolling
+                    isScrolling = false;
+                    startAutoScroll();
+                }
+                return false;
+            }
+        });
+
+    }
+
+    private boolean isScrolling = false;
+    private final int scrollSpeed = 100; // Adjust the scroll speed as needed
+    private final long scrollDelayMillis = 100; // Adjust the delay between scrolls as needed
+    private Handler handler = new Handler();
+
+    private void startAutoScroll() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isLastItemVisible()) {
+                    // Scroll to the first item if the last item is visible
+                    layoutManager.scrollToPosition(0);
+                } else {
+                    // Scroll by a certain amount (e.g., 100 in your case)
+                    binding.currencyRC.smoothScrollBy(scrollSpeed, 0);
+                }
+
+                // Repeat the process after the delay
+                handler.postDelayed(this, scrollDelayMillis);
+            }
+        }, scrollDelayMillis);
+    }
+
+    // Stop auto-scrolling when needed, for example, in onDestroyView
+    private void stopAutoScroll() {
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    private boolean isLastItemVisible() {
+        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+        int totalItemCount = binding.currencyRC.getAdapter().getItemCount();
+
+        // Check if the last visible item is the last item in the list
+        return lastVisibleItemPosition == totalItemCount - 1;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        stopAutoScroll();
     }
 
     private ArrayList<CurrenciesModel> getRateList(String name, CountriesRates.Rates rates) {

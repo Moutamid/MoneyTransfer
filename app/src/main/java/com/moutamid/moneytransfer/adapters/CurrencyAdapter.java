@@ -46,7 +46,6 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
         UserModel userModel = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
         String calc = "1" + Constants.getCurrencyCode(userModel.getCountry()) + " = " + (1 * Double.parseDouble(amount.getAmount())) + amount.getSign();
         holder.calculation.setText(calc);
-
     }
 
     @Override
