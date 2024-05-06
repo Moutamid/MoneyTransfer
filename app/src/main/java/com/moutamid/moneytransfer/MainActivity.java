@@ -45,6 +45,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onBackClick(){
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        Stash.put("BACK", 1);
+//        if (Stash.getInt("BACK", 0) == 0) {
+//            super.onBackPressed();
+//        } else if (Stash.getInt("BACK", 0) == 1) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+//        }
+
+    }
+
     private void updateNavHead() {
 
         Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())
@@ -61,6 +77,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateNavHead();
-        Constants.initDialog(this);
     }
 }

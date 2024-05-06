@@ -16,6 +16,7 @@ import com.fxn.stash.Stash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.moutamid.moneytransfer.MainActivity;
 import com.moutamid.moneytransfer.R;
 import com.moutamid.moneytransfer.adapters.ChatAdapter;
 import com.moutamid.moneytransfer.databinding.FragmentChatBinding;
@@ -37,7 +38,12 @@ public class ChatFragment extends Fragment {
         binding = FragmentChatBinding.inflate(getLayoutInflater(), container, false);
 
         binding.back.setOnClickListener(v -> {
-            getActivity().getSupportFragmentManager().popBackStack("Chat", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            MainActivity activity = (MainActivity) getActivity();
+            if (activity!=null){
+                activity.onBackClick();
+            }
+            // getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).disallowAddToBackStack().commit();
+           // getActivity().getSupportFragmentManager().popBackStack("Chat", FragmentManager.POP_BACK_STACK_INCLUSIVE); // ("Chat", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         });
 
         binding.chatRC.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -47,11 +53,11 @@ public class ChatFragment extends Fragment {
         return binding.getRoot();
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
         Constants.setLocale(requireContext(), Stash.getString(Constants.LANGUAGE, "en"));
-        Constants.initDialog(requireContext());
         getChats();
     }
 
@@ -62,7 +68,6 @@ public class ChatFragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Constants.dismissDialog();
                         if (snapshot.exists()){
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                                 ChatModel chatModel = dataSnapshot.getValue(ChatModel.class);
@@ -76,7 +81,6 @@ public class ChatFragment extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Constants.dismissDialog();
                         Toast.makeText(binding.getRoot().getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

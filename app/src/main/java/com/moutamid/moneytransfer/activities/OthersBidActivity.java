@@ -102,7 +102,6 @@ public class OthersBidActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Constants.initDialog(this);
     }
 
     private void showPopupMenu(View v) {
@@ -153,7 +152,6 @@ public class OthersBidActivity extends AppCompatActivity {
     }
     BidAdapter adapter;
     private void getAll() {
-        Constants.showDialog();
         Constants.databaseReference().child(Constants.BIDS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -176,12 +174,10 @@ public class OthersBidActivity extends AppCompatActivity {
                     adapter = new BidAdapter(OthersBidActivity.this, list);
                     binding.bidRC.setAdapter(adapter);
                 }
-                Constants.dismissDialog();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Constants.dismissDialog();
                 Toast.makeText(OthersBidActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

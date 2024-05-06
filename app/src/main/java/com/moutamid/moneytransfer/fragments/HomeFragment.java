@@ -53,8 +53,8 @@ public class HomeFragment extends Fragment {
 
         binding.placeBid.setOnClickListener(v -> startActivity(new Intent(requireContext(), PlaceBidActivity.class)));
         binding.othersBid.setOnClickListener(v -> startActivity(new Intent(requireContext(), OthersBidActivity.class)));
-        binding.chats.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).addToBackStack("Chat").commit());
-        binding.myBid.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyBidsFragment()).addToBackStack("BID").commit());
+        binding.chats.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChatFragment()).addToBackStack(null).commit());
+        binding.myBid.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyBidsFragment()).addToBackStack(null).commit());
         binding.setting.setOnClickListener(v -> startActivity(new Intent(requireContext(), SettingsActivity.class)));
 
         list = new ArrayList<>();
@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Constants.setLocale(requireContext(), Stash.getString(Constants.LANGUAGE, "en"));
-        Constants.initDialog(requireContext());
+//        Constants.initDialog(requireContext());
 //        if (list.isEmpty()){
 //            Constants.showDialog();
 //        }
@@ -118,7 +118,6 @@ public class HomeFragment extends Fragment {
                 .get().addOnSuccessListener(dataSnapshot -> {
                     userModel = dataSnapshot.getValue(UserModel.class);
                     updateUI();
-                    Constants.dismissDialog();
                     String name = userModel.getCountry().replace(" ", "_");
                     Constants.databaseReference().child(Constants.Values).child(name).get().addOnSuccessListener(dataSnapshot1 -> {
                         CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
@@ -126,8 +125,8 @@ public class HomeFragment extends Fragment {
                         updateRecyler();
                     }).addOnFailureListener(Throwable::printStackTrace);
                 }).addOnFailureListener(e -> {
+                    Toast.makeText(requireContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
-                    Constants.dismissDialog();
                 });
     }
 
@@ -179,7 +178,11 @@ public class HomeFragment extends Fragment {
                     layoutManager.scrollToPosition(0);
                 } else {
                     // Scroll by a certain amount (e.g., 100 in your case)
-                    binding.currencyRC.smoothScrollBy(scrollSpeed, 0);
+                    boolean b = Stash.getString(Constants.LANGUAGE, "en").equals("en");
+
+                    // positive value for scrolling left to right & negative value for right to left
+                    int speed = b ? scrollSpeed : (scrollSpeed * -1);
+                    binding.currencyRC.smoothScrollBy(speed, 0);
                 }
 
                 // Repeat the process after the delay

@@ -16,6 +16,7 @@ import com.fxn.stash.Stash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.moutamid.moneytransfer.MainActivity;
 import com.moutamid.moneytransfer.R;
 import com.moutamid.moneytransfer.activities.OthersBidActivity;
 import com.moutamid.moneytransfer.adapters.BidAdapter;
@@ -38,11 +39,15 @@ public class MyBidsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentMyBidsBinding.inflate(getLayoutInflater(), container, false);
-
+        Stash.put("BACK", 1);
         list = new ArrayList<>();
 
         binding.back.setOnClickListener(v -> {
-            getActivity().getSupportFragmentManager().popBackStack("BID", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            MainActivity activity = (MainActivity) getActivity();
+            if (activity!=null){
+                activity.onBackClick();
+            }
+           // getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).disallowAddToBackStack().commit();
         });
 
         binding.bidRC.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -55,7 +60,6 @@ public class MyBidsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Constants.setLocale(requireContext(), Stash.getString(Constants.LANGUAGE, "en"));
-        Constants.initDialog(requireContext());
         getList();
     }
 
@@ -65,7 +69,6 @@ public class MyBidsFragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Constants.dismissDialog();
                         if (snapshot.exists()) {
                             list.clear();
                             for (DataSnapshot datasnapshot : snapshot.getChildren()) {
@@ -90,7 +93,6 @@ public class MyBidsFragment extends Fragment {
                     @Override
                     public void onCancelled(@NonNull DatabaseError e) {
                         Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        Constants.dismissDialog();
                     }
                 });
     }

@@ -96,7 +96,6 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
         }
 
         holder.chat.setOnClickListener(v -> {
-            Constants.showDialog();
             Constants.databaseReference().child(Constants.CHATS).child(Constants.auth().getCurrentUser().getUid())
                     .get().addOnSuccessListener(snapshot -> {
                         if (snapshot.exists()) {
@@ -111,15 +110,12 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
                         } else {
                             Toast.makeText(context, context.getResources().getString(R.string.chat_not_available_yet), Toast.LENGTH_SHORT).show();
                         }
-                        Constants.dismissDialog();
                     }).addOnFailureListener(e -> {
-                        Constants.dismissDialog();
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         });
 
         holder.accept.setOnClickListener(v -> {
-            Constants.showDialog();
             String ID = UUID.randomUUID().toString();
             ChatModel chatModel = new ChatModel(
                     ID, model.getUserID(),
@@ -133,14 +129,11 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
             Constants.databaseReference().child(Constants.CHATS).child(Constants.auth().getCurrentUser().getUid()).child(chatModel.getID())
                     .setValue(chatModel).addOnFailureListener(e -> {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        Constants.dismissDialog();
                     }).addOnSuccessListener(unused -> {
                         Constants.databaseReference().child(Constants.CHATS).child(chatModel.getUserID()).child(chatModel.getID())
                                 .setValue(other).addOnFailureListener(e -> {
                                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    Constants.dismissDialog();
                                 }).addOnSuccessListener(unused1 -> {
-                                    Constants.dismissDialog();
                                     Toast.makeText(context, context.getResources().getString(R.string.you_can_now_start_conversation_with_this_user), Toast.LENGTH_SHORT).show();
                                 });
                     });
