@@ -20,8 +20,12 @@ import com.moutamid.moneytransfer.models.UserModel;
 import com.moutamid.moneytransfer.utilis.Constants;
 
 import java.text.Bidi;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.IllegalFormatPrecisionException;
+import java.util.Locale;
 import java.util.UUID;
 
 public class PlaceBidActivity extends AppCompatActivity {
@@ -44,6 +48,11 @@ public class PlaceBidActivity extends AppCompatActivity {
         Constants.setLocale(getBaseContext(), Stash.getString(Constants.LANGUAGE, "en"));
         binding.toolbar.title.setText(getString(R.string.place_your_bid));
         binding.toolbar.back.setOnClickListener(v -> onBackPressed());
+
+        Locale locale = new Locale("en");
+        Locale.setDefault(locale);
+        binding.bidAmount.getEditText().setTextLocale(locale);
+        binding.price.getEditText().setTextLocale(locale);
 
         stashUSer = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
 
@@ -70,7 +79,7 @@ public class PlaceBidActivity extends AppCompatActivity {
                 CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
                 Stash.put("PLACEEEE", countriesRates);
                 Constants.dismissDialog();
-                double pr = Constants.parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * Constants.parseDoubleWithLocale(String.valueOf(getCurrency()));
+                double pr = parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * parseDoubleWithLocale(String.valueOf(getCurrency()));
                 binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
             }).addOnFailureListener(e -> {
                 Constants.dismissDialog();
@@ -86,7 +95,7 @@ public class PlaceBidActivity extends AppCompatActivity {
 
         binding.countryTo.setOnCountryChangeListener(() -> {
             prefixTextBid = getCurrencyCodes(false);
-            double pr = Constants.parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * Constants.parseDoubleWithLocale(String.valueOf(getCurrency()));
+            double pr = parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * parseDoubleWithLocale(String.valueOf(getCurrency()));
             binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
             binding.bidAmount.setHelperText(getString(R.string.amount_in) + " " + prefixTextBid);
         });
@@ -113,7 +122,7 @@ public class PlaceBidActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
                     if (!s.toString().isEmpty()) {
-                        double pr = Constants.parseDoubleWithLocale(s.toString()) * Constants.parseDoubleWithLocale(String.valueOf(getCurrency()));
+                        double pr = parseDoubleWithLocale(s.toString()) * parseDoubleWithLocale(String.valueOf(getCurrency()));
                         binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
                     } else {
                        // binding.price.getEditText().setText(String.format("%.2f", 0f));
@@ -131,11 +140,24 @@ public class PlaceBidActivity extends AppCompatActivity {
 
     }
 
+    public static double parseDoubleWithLocale(String value) {
+        Locale locale = new Locale("en");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setDecimalFormatSymbols(symbols);
+        try {
+            return decimalFormat.parse(value).doubleValue();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0.0;
+        }
+    }
+
     private void placeBid() {
         BidModel bidModel = new BidModel(UUID.randomUUID().toString(),
                 stashUSer.getID(), stashUSer.getName(), stashUSer.getImage(), stashUSer.getRating(),
-                Constants.parseDoubleWithLocale(binding.price.getEditText().getText().toString()),
-                Constants.parseDoubleWithLocale(binding.bidAmount.getEditText().getText().toString()),
+                parseDoubleWithLocale(binding.price.getEditText().getText().toString()),
+                parseDoubleWithLocale(binding.bidAmount.getEditText().getText().toString()),
                 getCountry(),
                 getCountryTO(), binding.faceToFace.isChecked(), new Date().getTime());
         Constants.databaseReference().child(Constants.BIDS).child(bidModel.getID())

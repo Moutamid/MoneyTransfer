@@ -81,7 +81,7 @@ public class BidEditActivity extends AppCompatActivity {
                 CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
                 Stash.put("PLACEEEE", countriesRates);
                 Constants.dismissDialog();
-                double pr = Constants.parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * Constants.parseDoubleWithLocale(String.valueOf(getCurrency()));
+                double pr = PlaceBidActivity.parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * PlaceBidActivity.parseDoubleWithLocale(String.valueOf(getCurrency()));
                 binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
             }).addOnFailureListener(e -> {
                 Constants.dismissDialog();
@@ -91,7 +91,7 @@ public class BidEditActivity extends AppCompatActivity {
 
         binding.countryTo.setOnCountryChangeListener(() -> {
             prefixTextBid = getCurrencyCodes(false);
-            double pr = Constants.parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * Constants.parseDoubleWithLocale(String.valueOf(getCurrency()));
+            double pr = PlaceBidActivity.parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * PlaceBidActivity.parseDoubleWithLocale(String.valueOf(getCurrency()));
             binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
             binding.bidAmount.setHelperText(getString(R.string.amount_in) + " " + prefixTextBid);
         });
@@ -113,7 +113,7 @@ public class BidEditActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
                     if (!s.toString().isEmpty()) {
-                        double pr = Constants.parseDoubleWithLocale(s.toString()) * Constants.parseDoubleWithLocale(String.valueOf(getCurrency()));
+                        double pr = PlaceBidActivity.parseDoubleWithLocale(s.toString()) * PlaceBidActivity.parseDoubleWithLocale(String.valueOf(getCurrency()));
                         binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
                     }
                 } catch (IllegalFormatPrecisionException e) {
