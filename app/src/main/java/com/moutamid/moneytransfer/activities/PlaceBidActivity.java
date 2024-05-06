@@ -70,7 +70,7 @@ public class PlaceBidActivity extends AppCompatActivity {
                 CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
                 Stash.put("PLACEEEE", countriesRates);
                 Constants.dismissDialog();
-                double pr = Double.parseDouble(binding.price.getEditText().getText().toString()) * getCurrency();
+                double pr = Constants.parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * Constants.parseDoubleWithLocale(String.valueOf(getCurrency()));
                 binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
             }).addOnFailureListener(e -> {
                 Constants.dismissDialog();
@@ -86,7 +86,7 @@ public class PlaceBidActivity extends AppCompatActivity {
 
         binding.countryTo.setOnCountryChangeListener(() -> {
             prefixTextBid = getCurrencyCodes(false);
-            double pr = Double.parseDouble(binding.price.getEditText().getText().toString()) * getCurrency();
+            double pr = Constants.parseDoubleWithLocale(binding.price.getEditText().getText().toString()) * Constants.parseDoubleWithLocale(String.valueOf(getCurrency()));
             binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
             binding.bidAmount.setHelperText(getString(R.string.amount_in) + " " + prefixTextBid);
         });
@@ -95,6 +95,12 @@ public class PlaceBidActivity extends AppCompatActivity {
             prefixTextPrice = getCurrencyCodes(true);
             binding.price.setHelperText(getString(R.string.amount_in) + " " + prefixTextPrice);
         });
+
+//        binding.price.setOnClickListener(v -> {
+//            if (binding.price.getEditText().getText().toString().equals("0.0")){
+//                binding.price.getEditText().setText("");
+//            }
+//        });
 
         binding.price.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -107,12 +113,12 @@ public class PlaceBidActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
                     if (!s.toString().isEmpty()) {
-                        double pr = Double.parseDouble(s.toString()) * getCurrency();
+                        double pr = Constants.parseDoubleWithLocale(s.toString()) * Constants.parseDoubleWithLocale(String.valueOf(getCurrency()));
                         binding.bidAmount.getEditText().setText(String.format("%.2f", pr));
                     } else {
-                        binding.price.getEditText().setText(String.format("%.2f", 0f));
+                       // binding.price.getEditText().setText(String.format("%.2f", 0f));
                     }
-                } catch (IllegalFormatPrecisionException e ){
+                } catch (Exception e ){
                     e.printStackTrace();
                 }
             }
@@ -128,8 +134,8 @@ public class PlaceBidActivity extends AppCompatActivity {
     private void placeBid() {
         BidModel bidModel = new BidModel(UUID.randomUUID().toString(),
                 stashUSer.getID(), stashUSer.getName(), stashUSer.getImage(), stashUSer.getRating(),
-                Double.parseDouble(binding.price.getEditText().getText().toString()),
-                Double.parseDouble(binding.bidAmount.getEditText().getText().toString()),
+                Constants.parseDoubleWithLocale(binding.price.getEditText().getText().toString()),
+                Constants.parseDoubleWithLocale(binding.bidAmount.getEditText().getText().toString()),
                 getCountry(),
                 getCountryTO(), binding.faceToFace.isChecked(), new Date().getTime());
         Constants.databaseReference().child(Constants.BIDS).child(bidModel.getID())
@@ -149,7 +155,7 @@ public class PlaceBidActivity extends AppCompatActivity {
         Stash.clear("PLACEEEE");
     }
 
-    private double getCurrency() {
+    private double  getCurrency() {
         CountriesRates countriesRates = (CountriesRates) Stash.getObject("PLACEEEE", CountriesRates.class);
         if (countriesRates == null) {
             countriesRates = (CountriesRates) Stash.getObject(Constants.Values, CountriesRates.class);

@@ -56,7 +56,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void getChats() {
-        Constants.showDialog();
+//        Constants.showDialog();
         list = new ArrayList<>();
         Constants.databaseReference().child(Constants.CHATS).child(Constants.auth().getCurrentUser().getUid())
                 .addValueEventListener(new ValueEventListener() {

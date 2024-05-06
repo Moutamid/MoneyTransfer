@@ -60,7 +60,7 @@ public class MyBidsFragment extends Fragment {
     }
 
     private void getList() {
-        Constants.showDialog();
+       // Constants.showDialog();
         Constants.databaseReference().child(Constants.BIDS)
                 .addValueEventListener(new ValueEventListener() {
                     @Override

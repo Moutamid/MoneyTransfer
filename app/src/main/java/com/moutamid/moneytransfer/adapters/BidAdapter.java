@@ -60,11 +60,11 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.BidVH> implement
     public void onBindViewHolder(@NonNull BidVH holder, int position) {
         BidModel model = list.get(holder.getAbsoluteAdapterPosition());
 
-        holder.from.setText(model.getMyCountry());
-        holder.to.setText(model.getBidCountry());
+        holder.from.setText(model.getMyCountry().replace("_", " "));
+        holder.to.setText(model.getBidCountry().replace("_", " "));
         holder.userName.setText(model.getUsername());
         Glide.with(context).load(model.getUserImage()).placeholder(R.drawable.profile_icon).into(holder.profile);
-        String money = (getCurrencyCode(model.getBidCountry()) + " " + model.getPrice_ioc()) + " = " + (getCurrencyCode(model.getMyCountry()) + " " + model.getPrice());
+        String money = (getCurrencyCode(model.getBidCountry().replace("_", " ")) + " " + model.getPrice_ioc()) + " = " + (getCurrencyCode(model.getMyCountry().replace("_", " ")) + " " + model.getPrice());
         holder.money.setText(money);
 
         String date = new SimpleDateFormat("dd/MM/yyyy - HH:mm", Locale.getDefault()).format(model.getTimestamp());

@@ -1,5 +1,6 @@
 package com.moutamid.moneytransfer.utilis;
 
+import com.fxn.stash.Stash;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,6 +27,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -70,6 +74,19 @@ public class Constants {
     public static final String RUSSIA = "Russia";
     public static final String SYRIA = "Syria";
     public static final String PALESTINE = "Palestine";
+
+    public static double parseDoubleWithLocale(String value) {
+        Locale locale = new Locale(Stash.getString(Constants.LANGUAGE, "en"));
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setDecimalFormatSymbols(symbols);
+        try {
+            return decimalFormat.parse(value).doubleValue();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0.0;
+        }
+    }
 
     public static String getNameCode(String myCountry) {
         // "eg,ae,sa,qa,ma,sd,om,it,ru,sy,ps"

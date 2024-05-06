@@ -114,7 +114,7 @@ public class OthersBidActivity extends AppCompatActivity {
                 adapter.getFilter().filter("egypt");
                 return true;
             } else if (itemId == R.id.uae) {
-                adapter.getFilter().filter("United Arab Emirates");
+                adapter.getFilter().filter("United_Arab_Emirates");
                 return true;
             } else if (itemId == R.id.Saudi_Arabia) {
                 adapter.getFilter().filter("Saudi Arabia");
@@ -161,8 +161,9 @@ public class OthersBidActivity extends AppCompatActivity {
                     list.clear();
                     for (DataSnapshot datasnapshot : snapshot.getChildren()) {
                         BidModel bidModel = datasnapshot.getValue(BidModel.class);
-                        if (!stashUser.getID().equals(bidModel.getUserID()) && bidModel.getBidCountry().equals(stashUser.getCountry()))
-                            list.add(bidModel);
+                        list.add(bidModel);
+//                        if (!stashUser.getID().equals(bidModel.getUserID()) && bidModel.getBidCountry().equals(stashUser.getCountry()))
+//                            list.add(bidModel);
                     }
 
                     if (list.size() > 0) {

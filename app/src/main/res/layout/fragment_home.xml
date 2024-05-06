@@ -42,7 +42,6 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/profile_icon" />
 
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout

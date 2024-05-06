@@ -111,7 +111,9 @@ public class HomeFragment extends Fragment {
         super.onResume();
         Constants.setLocale(requireContext(), Stash.getString(Constants.LANGUAGE, "en"));
         Constants.initDialog(requireContext());
-        Constants.showDialog();
+//        if (list.isEmpty()){
+//            Constants.showDialog();
+//        }
         Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())
                 .get().addOnSuccessListener(dataSnapshot -> {
                     userModel = dataSnapshot.getValue(UserModel.class);
@@ -128,6 +130,7 @@ public class HomeFragment extends Fragment {
                     Constants.dismissDialog();
                 });
     }
+
     LinearLayoutManager layoutManager;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -190,12 +193,24 @@ public class HomeFragment extends Fragment {
         handler.removeCallbacksAndMessages(null);
     }
 
-    private boolean isLastItemVisible() {
-        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-        int totalItemCount = binding.currencyRC.getAdapter().getItemCount();
+//    private boolean isLastItemVisible() {
+//        try {
+//            int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+//            int totalItemCount = binding.currencyRC.getAdapter().getItemCount();
+//
+//            // Check if the last visible item is the last item in the list
+//            return lastVisibleItemPosition == totalItemCount - 1;
+//        } catch (Exception e){
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
-        // Check if the last visible item is the last item in the list
-        return lastVisibleItemPosition == totalItemCount - 1;
+    private boolean isLastItemVisible() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) binding.currencyRC.getLayoutManager();
+        int pos = layoutManager.findLastCompletelyVisibleItemPosition();
+        int numItems = binding.currencyRC.getAdapter() != null ? binding.currencyRC.getAdapter().getItemCount() : 0;
+        return pos >= numItems - 1;
     }
 
     @Override
