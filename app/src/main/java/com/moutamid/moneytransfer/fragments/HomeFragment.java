@@ -120,9 +120,11 @@ public class HomeFragment extends Fragment {
                     updateUI();
                     String name = userModel.getCountry().replace(" ", "_");
                     Constants.databaseReference().child(Constants.Values).child(name).get().addOnSuccessListener(dataSnapshot1 -> {
-                        CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
-                        Stash.put(Constants.Values, countriesRates);
-                        updateRecyler();
+                        if (dataSnapshot1.exists()) {
+                            CountriesRates countriesRates = dataSnapshot1.getValue(CountriesRates.class);
+                            Stash.put(Constants.Values, countriesRates);
+                            updateRecyler();
+                        }
                     }).addOnFailureListener(Throwable::printStackTrace);
                 }).addOnFailureListener(e -> {
                     Toast.makeText(requireContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
